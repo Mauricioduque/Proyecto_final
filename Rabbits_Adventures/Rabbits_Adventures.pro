@@ -10,19 +10,23 @@ CONFIG += c++11
 
 SOURCES += \
     cerdoenemigo.cpp \
+    fondo.cpp \
     jabalienemigo.cpp \
     lechuga.cpp \
     main.cpp \
     mainwindow.cpp \
     muros.cpp \
+    murosnota.cpp \
     zanahoria.cpp
 
 HEADERS += \
     cerdoenemigo.h \
+    fondo.h \
     jabalienemigo.h \
     lechuga.h \
     mainwindow.h \
     muros.h \
+    murosnota.h \
     zanahoria.h
 
 FORMS += \
