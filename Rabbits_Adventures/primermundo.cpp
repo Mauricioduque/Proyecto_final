@@ -1,11 +1,13 @@
 #include "primermundo.h"
 
-PrimerMundo::PrimerMundo(QObject *parent):QGraphicsScene(0,0,8000,720,parent)
-  , anchoEscena(6600)
+PrimerMundo::PrimerMundo(QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
   , personaje(nullptr)
-  , salto(true)
   , background(nullptr)
-  , velocidad(50)
+  , m_jumpAnimation(new QPropertyAnimation(this))
+  , scroll(s)
+  , lechuga()
+  , ladrillosNota()
+
 
 {
 
@@ -17,7 +19,11 @@ PrimerMundo::PrimerMundo(QObject *parent):QGraphicsScene(0,0,8000,720,parent)
     connect(timerEscena, SIGNAL(timeout()), this, SLOT(correrEscena()));
 
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(actualizar()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(moverPersonaje()));
+
+    mFallTimer.setInterval(20);
+    connect(&mFallTimer, &QTimer::timeout, this, &PrimerMundo::fallPersonaje);
+
 
     m_jumpAnimation->setTargetObject(this);
     m_jumpAnimation->setPropertyName("jumpFactor");
@@ -41,6 +47,19 @@ PrimerMundo::PrimerMundo(QObject *parent):QGraphicsScene(0,0,8000,720,parent)
     personaje =  new PPConejo;
     addItem(personaje);
 
+}
+
+
+qreal PrimerMundo::jumpFactor() const{
+
+    return m_jumpFactor;
+}
+void PrimerMundo::setJumpFactor(const qreal &jumpFactor)
+{
+        if (m_jumpFactor == jumpFactor) return;
+
+        m_jumpFactor = jumpFactor;
+        emit jumpFactorChanged(m_jumpFactor);
 }
 
 void PrimerMundo::iniciarEscenaUno()
@@ -105,5 +124,291 @@ void PrimerMundo::agregarEntradaHorizontal(int entrada)
 void PrimerMundo::checkTimer()
 {
 
+    if (0 == personaje->direction()){
+        personaje->stand();
+        timerSprite->stop();
+    }
+    else if (!timerSprite->isActive()){
+        timerSprite->start();
+        personaje->walk();
+    }
+
 }
 
+void PrimerMundo::correrEscena()
+{
+
+    for (int i = 0;i < zanahoria.size(); i++)
+    {
+        zanahoria.at(i)->nextSprite();
+    }
+
+    for (int i = 0;i < cerdo.size(); i++)
+    {
+        cerdo.at(i)->nextSprite();
+    }
+    for (int i = 0;i < jabali.size(); i++)
+    {
+        jabali.at(i)->nextSprite();
+    }
+
+    //mueve los cerdos
+    for (int i = 0;i < cerdo.size(); i++)
+    {
+        cerdo.at(i)->setX(cerdo.at(i)->pos().x() + cerdo.at(i)->getDireccion() * (-7));
+    }
+
+    //mueve los jabalis
+    for (int i = 0;i < jabali.size(); i++)
+    {
+        jabali.at(i)->setX(jabali.at(i)->pos().x() + jabali.at(i)->getDireccion() * (-7));
+    }
+
+}
+
+void PrimerMundo::jumpPersonaje()
+{
+    if (QAbstractAnimation::Stopped == m_jumpAnimation->state()){
+       personaje->stand();
+       return;
+    }
+    QGraphicsItem *item = collidingPlatforms();
+    if(item){
+        if(personaje->isTouchingHead(item)){
+
+            m_jumpAnimation->stop();
+
+            if(m_platform){
+                personaje->setPos(personaje->pos().x(), m_platform->pos().y() - personaje->boundingRect().height());
+                return;
+            }
+            if(!m_platform){
+                personaje->setPos(personaje->pos().x(), nivelTierra - personaje->boundingRect().height());
+                return;
+            }
+        }
+        else{
+            if(manejoColisiones()){
+                return;
+            }
+        }
+    }
+
+    if(mFallTimer.isActive()){
+        return;
+    }
+    qreal y = (nivelTierra - personaje->boundingRect().height()) - m_jumpAnimation->currentValue().toReal() * m_jumpHeight;
+    if(m_platform){
+        y = (m_platform->pos().y() - personaje->boundingRect().height()) - m_jumpAnimation->currentValue().toReal() * m_jumpHeight;
+        if(!(m_platform && personaje->isTouchingPlatform(m_platform)) && m_jumpFactor < 0.1 ) {
+            if((personaje->pos().x() < m_platform->pos().x()) || (personaje->pos().x() > m_platform->pos().x() + m_platform->boundingRect().width())){
+                if(!m_platform){
+                    m_platform = 0;
+                }
+                if(personaje->pos().y() <nivelTierra){
+                    personaje->fall();
+                    mFallTimer.start();
+                    return;
+                }
+            }
+        }
+    }
+    personaje->setPos(personaje->pos().x(), y);
+
+
+
+
+}
+
+void PrimerMundo::jumpStatusChanged(QAbstractAnimation::State newState, QAbstractAnimation::State oldState)
+{
+    if(newState == QAbstractAnimation::Stopped && oldState == QAbstractAnimation::Running){
+    }
+}
+
+void PrimerMundo::moverPersonaje()
+{
+
+    int direction = personaje->direction();
+    int dx=direction *velocidad;
+    personaje->nextFrame();
+    if (0 == direction){
+     return;
+        if(!(m_platform && personaje->isTouchingPlatform(m_platform))&& m_jumpAnimation->state() == QAbstractAnimation::Stopped){
+            if(m_platform){
+                personaje->fall();
+                //mFallTimer.start();
+            }
+        }
+    }
+
+    qreal newX = qBound(minX, posicionX + dx, maxX);
+    if (newX == posicionX)
+    {
+        return;
+    }
+    posicionX = newX;
+
+    const int longituCambio = 300;
+    int derechaLongitudCambio = width() - longituCambio;
+
+    const int posicionVisibleJugador = posicionX - desplazamientoMundo;
+    const int newMundoDerecha = posicionVisibleJugador - derechaLongitudCambio;
+    if (newMundoDerecha > 0)
+    {
+        desplazamientoMundo += newMundoDerecha;
+    }
+    const int newMundoIzquierda = longituCambio - posicionVisibleJugador;
+    if (newMundoIzquierda > 0)
+    {
+        desplazamientoMundo -= newMundoIzquierda;
+    }
+
+    const int maxDesplazamientoMundo = anchoEscena - qRound(width());
+    desplazamientoMundo = qBound(0, desplazamientoMundo, maxDesplazamientoMundo);
+
+    //mueve los ladrillos
+    for (int i = 0;i < ladrillosNota.size(); i++)
+    {
+        ladrillosNota.at(i)->setX(-dx + ladrillosNota.at(i)->pos().x());
+    }
+
+    //mueve las monedas
+    for (int i = 0;i < lechuga.size(); i++)
+    {
+        lechuga.at(i)->setX(-dx + lechuga.at(i)->pos().x());
+    }
+
+    //mueve las zanahorias
+    for (int i = 0;i < zanahoria.size(); i++)
+    {
+        zanahoria.at(i)->setX(-dx + zanahoria.at(i)->pos().x());
+    }
+
+    //mover cerdos
+    for (int i = 0;i < cerdo.size(); i++)
+    {
+        cerdo.at(i)->setX(-dx + cerdo.at(i)->pos().x());
+    }
+
+    //mover jabali
+    for (int i = 0;i < jabali.size(); i++)
+    {
+        jabali.at(i)->setX(-dx + jabali.at(i)->pos().x());
+    }
+}
+
+void PrimerMundo::fallPersonaje()
+{
+    QGraphicsItem *item = collidingPlatforms();
+    personaje->setPos(personaje->pos().x(), personaje->pos().y() +30);
+    if(item && manejoColisiones()){
+       mFallTimer.stop();
+       personaje->walk();
+    }
+    else if(personaje->pos().y() + personaje->boundingRect().height() >= nivelTierra){
+            personaje->setPos(personaje->pos().x(), nivelTierra - personaje->boundingRect().height());
+            mFallTimer.stop();
+            personaje->walk();
+            m_platform = 0;
+        }
+
+}
+
+bool PrimerMundo::manejoColisiones()
+{
+    QGraphicsItem *platform= collidingPlatforms();
+    if(platform) {
+        QPointF platformPos = platform->pos();
+        if(personaje->isTouchingFoot(platform)){
+            personaje->setPos(personaje->pos().x(), platformPos.y() - personaje->boundingRect().height());
+            m_platform = platform;
+            m_jumpAnimation->stop();
+            return true;
+        }
+    }
+    else{
+        m_platform = 0;
+    }
+    return false;
+}
+
+QGraphicsItem *PrimerMundo::collidingPlatforms()
+{
+        QList<QGraphicsItem*> items =  collidingItems(personaje);
+        foreach(QGraphicsItem *item, items){
+            if(MurosNota *brickplatform = qgraphicsitem_cast<MurosNota *>(item)){
+                return brickplatform;
+           }
+        }
+        return 0;
+}
+
+void PrimerMundo::keyPressEvent(QKeyEvent *event)
+{
+
+    if (event->isAutoRepeat())
+        return;
+
+    switch (event->key()){
+        case Qt::Key_Right:
+                personaje->addDirection(1);
+                personaje->addStandingDirection(1);
+                checkTimer();
+                break;
+
+        case Qt::Key_Left:
+                personaje->addDirection(-1);
+                personaje->addStandingDirection(-1);
+                checkTimer();
+                break;
+
+        case Qt::Key_Space:
+                if(mFallTimer.isActive()){
+                    return;}
+                else{
+                    if (QAbstractAnimation::Stopped == m_jumpAnimation->state()){
+                        m_jumpAnimation->start();
+                    }
+                }
+                break;
+
+        default:
+            break;
+    }
+}
+
+void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->isAutoRepeat())
+        return;
+
+    switch (event->key())
+    {
+        case Qt::Key_Right:
+            personaje->addDirection(-1);
+            personaje->addStandingDirection(1);
+            checkTimer();
+            break;
+
+        case Qt::Key_Left:
+            personaje->addDirection(1);
+            personaje->addStandingDirection(-1);
+            checkTimer();
+            break;
+
+        default:
+            break;
+    }
+}
+
+PrimerMundo::~PrimerMundo()
+{
+    delete personaje;
+    delete background;
+    lechuga.clear();
+    zanahoria.clear();
+    ladrillosNota.clear();
+    jabali.clear();
+    cerdo.clear();
+}

@@ -9,6 +9,9 @@
 #include <QDebug>
 #include <QGraphicsView>
 #include <QList>
+#include <QScrollBar>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsItem>
 
 #include "cerdoenemigo.h"
 #include "fondo.h"
@@ -26,7 +29,7 @@ class PrimerMundo :public QGraphicsScene
     Q_OBJECT
     Q_PROPERTY(qreal jumpFactor READ jumpFactor WRITE setJumpFactor NOTIFY jumpFactorChanged)
 public:
-    explicit PrimerMundo(QObject *parent = nullptr);
+    explicit PrimerMundo(QScrollBar *s,QObject *parent = nullptr);
     ~PrimerMundo();
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
@@ -42,8 +45,11 @@ private slots:
     void jumpPersonaje();
     void jumpStatusChanged(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
     void moverPersonaje();
-    void actualizar();
-    void nextSprite();
+    void fallPersonaje();
+    bool manejoColisiones();
+    QGraphicsItem *collidingPlatforms();
+
+
 
 protected:
     void keyPressEvent(QKeyEvent *event);
@@ -55,12 +61,9 @@ signals:
     void repetirNivel();
 
 private:
-    int anchoEscena;
+    int anchoEscena=6600;
 
     PPConejo *personaje;
-
-    bool salto;
-
 
     Fondo *background;
 
@@ -68,16 +71,21 @@ private:
     qreal maxX;
     qreal nivelTierra;
     qreal posicionX;
-    int velocidad;
+    int velocidad=7;
+    int desplazamientoMundo=0;
 
     QTimer *timer;
+    QTimer mFallTimer;
     QTimer *timerEscena;
     QTimer *timerSprite;
     QPropertyAnimation *m_jumpAnimation;
     qreal m_jumpFactor;
-    int m_jumpHeight;
+    int m_jumpHeight=200;
 
-    QGraphicsItem *mandoImagen;
+    QGraphicsItem *m_platform;
+
+
+    QScrollBar *scroll;
 
     //complementos de la escena
     QList <Lechuga *> lechuga;
