@@ -6,7 +6,7 @@ Muros::Muros(QGraphicsItem *parent): QGraphicsItem(parent)
 
 {
     setFlag(ItemClipsToShape);
-    sprite = QPixmap(":images/conveyorR.png");
+    sprite = QPixmap(":/conveyorR.png");
 
 }
 

@@ -17,6 +17,7 @@ SOURCES += \
     mainwindow.cpp \
     muros.cpp \
     murosnota.cpp \
+    ppconejo.cpp \
     zanahoria.cpp
 
 HEADERS += \
@@ -27,6 +28,7 @@ HEADERS += \
     mainwindow.h \
     muros.h \
     murosnota.h \
+    ppconejo.h \
     zanahoria.h
 
 FORMS += \
@@ -36,3 +38,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Imagenes/imagenes.qrc

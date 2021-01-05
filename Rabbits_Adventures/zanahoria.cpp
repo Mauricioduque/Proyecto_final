@@ -5,7 +5,7 @@ Zanahoria::Zanahoria(QGraphicsItem *parent): QGraphicsItem(parent)
 
 {
     setFlag(ItemClipsToShape);
-    sprite = QPixmap("");
+    sprite = QPixmap(":/zanahoria.png");
     posSprite=0;
 }
 

@@ -3,7 +3,7 @@
 Lechuga::Lechuga(QGraphicsItem *parent): QGraphicsItem(parent)
 {
     setFlag(ItemClipsToShape);
-    sprite = QPixmap("");
+    sprite = QPixmap(":/lechuga.png");
     posSprite=0;
 }
 

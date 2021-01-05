@@ -4,7 +4,7 @@ JabaliEnemigo::JabaliEnemigo(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     direccion = 1;
     setFlag(ItemClipsToShape);
-    sprite = QPixmap("");
+    sprite = QPixmap(":/jabalí.png");
 }
 
 int JabaliEnemigo::getDireccion()
