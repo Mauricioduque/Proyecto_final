@@ -18,6 +18,7 @@ SOURCES += \
     muros.cpp \
     murosnota.cpp \
     ppconejo.cpp \
+    primermundo.cpp \
     zanahoria.cpp
 
 HEADERS += \
@@ -29,6 +30,7 @@ HEADERS += \
     muros.h \
     murosnota.h \
     ppconejo.h \
+    primermundo.h \
     zanahoria.h
 
 FORMS += \
