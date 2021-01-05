@@ -1,10 +1,10 @@
 #include "lechuga.h"
 
 Lechuga::Lechuga(QGraphicsItem *parent): QGraphicsItem(parent)
-    , posSprite(0)
 {
     setFlag(ItemClipsToShape);
     sprite = QPixmap("");
+    posSprite=0;
 }
 
 Lechuga::~Lechuga()
@@ -12,17 +12,6 @@ Lechuga::~Lechuga()
 
 }
 
-void Lechuga::nextSprite()
-{
-    //Manejo de Sprites
-    //Distancia en cada sprite
-    posSprite += 38;
-    //Condicion volver al primer sprite, si sobre pasa la dimension la imagen plana
-    if(posSprite >= 300)
-    {
-        posSprite = 0;
-    }
-}
 
 QRectF Lechuga::boundingRect() const
 {

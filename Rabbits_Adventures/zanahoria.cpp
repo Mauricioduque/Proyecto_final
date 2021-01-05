@@ -2,10 +2,11 @@
 
 
 Zanahoria::Zanahoria(QGraphicsItem *parent): QGraphicsItem(parent)
-    , posSprite(0)
+
 {
     setFlag(ItemClipsToShape);
     sprite = QPixmap("");
+    posSprite=0;
 }
 
 Zanahoria::~Zanahoria()

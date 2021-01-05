@@ -12,11 +12,13 @@ SOURCES += \
     lechuga.cpp \
     main.cpp \
     mainwindow.cpp \
+    muros.cpp \
     zanahoria.cpp
 
 HEADERS += \
     lechuga.h \
     mainwindow.h \
+    muros.h \
     zanahoria.h
 
 FORMS += \
