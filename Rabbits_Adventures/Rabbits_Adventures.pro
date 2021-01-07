@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     cerdoenemigo.cpp \
     fondo.cpp \
+    inicio.cpp \
     jabalienemigo.cpp \
     lechuga.cpp \
     main.cpp \
@@ -19,11 +20,13 @@ SOURCES += \
     murosnota.cpp \
     ppconejo.cpp \
     primermundo.cpp \
+    view.cpp \
     zanahoria.cpp
 
 HEADERS += \
     cerdoenemigo.h \
     fondo.h \
+    inicio.h \
     jabalienemigo.h \
     lechuga.h \
     mainwindow.h \
@@ -31,10 +34,10 @@ HEADERS += \
     murosnota.h \
     ppconejo.h \
     primermundo.h \
+    view.h \
     zanahoria.h
 
-FORMS += \
-    mainwindow.ui
+FORMS +=
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,3 +46,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Imagenes/imagenes.qrc
+
+DISTFILES +=

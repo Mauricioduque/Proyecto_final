@@ -1,4 +1,5 @@
 #include "ppconejo.h"
+#include <iostream>
 
 PPConejo::PPConejo(QGraphicsItem *parent) : QGraphicsItem(parent),m_StandingDirection(), mState(Standing){
 
@@ -35,6 +36,7 @@ void PPConejo::walk(){
     mPixmap = mWalkPixmap;
     mCurrentFrame = 0;
     mState = Walking;
+
 }
 
 void PPConejo::fall(){
@@ -59,20 +61,21 @@ int PPConejo::standingDirection() const{
 
 void PPConejo::nextFrame(){
 
-    mCurrentFrame += 57;
-    if (mCurrentFrame >= 1191 ) {
+    mCurrentFrame += 63;
+
+    if (mCurrentFrame >= 503 ) {
         mCurrentFrame = 0;
     }
 }
 
 QRectF PPConejo::boundingRect() const{
 
-    return QRectF(0,0,45,73);
+    return QRectF(0,0,63,73);
 }
 
 void PPConejo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
 
-    painter->drawPixmap(0,0, mPixmap, mCurrentFrame, 0,45, 73);
+    painter->drawPixmap(0,0, mPixmap, mCurrentFrame, 0,63, 73);
     setTransformOriginPoint(boundingRect().center());
     Q_UNUSED(widget);
     Q_UNUSED(option);

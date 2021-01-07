@@ -3,10 +3,11 @@
         <file>cerdo.png</file>
         <file>conejo.png</file>
         <file>conveyorR.png</file>
-        <file>fondo.jpg</file>
         <file>jabalí.png</file>
         <file>ladrilloNota.png</file>
         <file>lechuga.png</file>
         <file>zanahoria.png</file>
+        <file>ground.png</file>
+        <file>fondo.png</file>
     </qresource>
 </RCC>

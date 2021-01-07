@@ -1,15 +1,34 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include <iostream>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
+
+#include "mainwindow.h"
+#include <iostream>
+
+
+MainWindow::MainWindow(){
+
+    createScene();
+    setCentralWidget(view);
+    setWindowTitle("Super Mario");
+
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+
+void MainWindow::createScene(){
+
+    view = new View;
+    title = new Inicio(view);
 }
+
+void MainWindow::setSize(){
+
+    this->setFixedSize(1280,740);
+    int x = ((screenGeometry.width() - this->width()) / 2);
+    int y = ((screenGeometry.height() - this->height()) / 2);
+    this->move(x, y);
+}
+
+
+
 

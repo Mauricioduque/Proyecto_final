@@ -34,14 +34,13 @@ public:
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
     void iniciarEscenaUno();
+    void correrEscena(QTimerEvent *);
 
 private:
-    void agregarEntradaHorizontal(int entrada);
     void checkTimer();
 
 
 private slots:
-    void correrEscena();
     void jumpPersonaje();
     void jumpStatusChanged(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
     void moverPersonaje();
@@ -50,22 +49,22 @@ private slots:
     QGraphicsItem *collidingPlatforms();
 
 
-
 protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
 signals:
-    void finalizarNivelUno();
     void jumpFactorChanged(qreal);
-    void repetirNivel();
+
 
 private:
     int anchoEscena=6600;
 
     PPConejo *personaje;
 
-    Fondo *background;
+    Fondo *background=0;
+    Fondo *ground;
+    Zanahoria *zanahoria1;
 
     qreal minX;
     qreal maxX;
@@ -74,10 +73,8 @@ private:
     int velocidad=7;
     int desplazamientoMundo=0;
 
-    QTimer *timer;
+    QTimer timer;
     QTimer mFallTimer;
-    QTimer *timerEscena;
-    QTimer *timerSprite;
     QPropertyAnimation *m_jumpAnimation;
     qreal m_jumpFactor;
     int m_jumpHeight=200;
@@ -94,6 +91,8 @@ private:
     QList <Muros*> muros;
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
+    bool falling;
+    bool jumping;
 };
 
 #endif // PRIMERMUNDO_H
