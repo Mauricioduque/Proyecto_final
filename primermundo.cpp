@@ -106,6 +106,7 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 
 void PrimerMundo::moverPersonaje()
 {
+    checkColisionMuros();
 
     if(personaje->isFalling()){
         return;
@@ -273,7 +274,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 
     //Agregamos ladrillos
-    int posLadrillo[33][3] = {{550,540,2}, {650,440,2}, {750,340,2}, {1050,340,2}, {1150,440,2}, {1250,540,2}, {1550,200,3}, {1350,330,1}
+    int posLadrillo[33][3] = {{550,500,2}, {650,400,2}, {750,300,2}, {1050,300,2}, {1150,400,2}, {1250,500,2}, {1550,200,3}, {1350,330,1}
                              , {1900,200,3}, {1700,440,4}, {2250,440,1}, {2850,510,2}, {2950,460,1},{2750,560,3}, {3200,460,1}, {3250,510,2}, {3300,560,3}
                              , {3350,610,4},{2650,610,4}, {4000,500,1}, {4100,500,3}, {4100,300,1}, {4250,200,6}, {4650,200,1}, {4850,200,1}, {5400,610,7}
                              , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}, {5650,360,2}, {5700,310,1},{5800,260,1}};
@@ -458,6 +459,24 @@ bool PrimerMundo::manejoColisiones()
     return false;
     }
     return 0;
+}
+
+void PrimerMundo::checkColisionMuros()
+{
+    QList<QGraphicsItem*> items = collidingItems(personaje);
+    foreach (QGraphicsItem* item, items) {
+
+        MurosNota * w = qgraphicsitem_cast<MurosNota *>(item);
+        if(w){
+            if(w->pos().x()){
+                if(personaje->pos().x() < w->pos().x())
+                    personaje->setPos(w->pos().x()- personaje->boundingRect().width(),personaje->pos().y());
+                if(personaje->pos().x() > w->pos().x()){
+                    personaje->setPos(w->pos().x() + personaje->boundingRect().width()+96,personaje->pos().y());
+                }
+            }
+        }
+     }
 }
 
 PrimerMundo::~PrimerMundo()
