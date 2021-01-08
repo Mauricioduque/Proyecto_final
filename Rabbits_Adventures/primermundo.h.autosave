@@ -67,7 +67,6 @@ private:
     Fondo *background=0;
     Fondo *ground;
     Fondo *danger;
-    Zanahoria *zanahoria1;
 
     qreal minX;
     qreal maxX;

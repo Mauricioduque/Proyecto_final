@@ -266,9 +266,6 @@ void PrimerMundo::iniciarEscenaUno()
     personaje->setPos(50, nivelTierra - personaje->boundingRect().height() );
     addItem(personaje);
 
-    zanahoria1 = new Zanahoria();
-    zanahoria1->setPos(50, nivelTierra - zanahoria1->boundingRect().height()-200);
-    addItem(zanahoria1);
     startTimer( 100 );
 
 
