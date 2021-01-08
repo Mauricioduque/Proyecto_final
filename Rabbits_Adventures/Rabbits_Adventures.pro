@@ -18,6 +18,7 @@ SOURCES += \
     mainwindow.cpp \
     muros.cpp \
     murosnota.cpp \
+    pina.cpp \
     ppconejo.cpp \
     primermundo.cpp \
     view.cpp \
@@ -32,6 +33,7 @@ HEADERS += \
     mainwindow.h \
     muros.h \
     murosnota.h \
+    pina.h \
     ppconejo.h \
     primermundo.h \
     view.h \

@@ -106,6 +106,7 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 
 void PrimerMundo::moverPersonaje()
 {
+    checkColisionMuros();
 
     if(personaje->isFalling()){
         return;
@@ -255,6 +256,10 @@ void PrimerMundo::iniciarEscenaUno()
     ground->setPos(0,nivelTierra);
     addItem(ground);
 
+    //add señal
+    danger = new Fondo(QPixmap(":/danger.png"));
+    danger->setPos(5650,335);
+    addItem(danger);
 
     //AgregarPersonaje
     personaje = new PPConejo();
@@ -269,10 +274,10 @@ void PrimerMundo::iniciarEscenaUno()
 
 
     //Agregamos ladrillos
-    int posLadrillo[30][3] = {{550,500,1}, {650,500,1}, {750,500,1}, {650,300,1}, {1150,400,2}, {1350,500,2}, {1350,200,6}, {2150,450,1}
-                             , {2250,450,1}, {3050,610,4}, {3100,560,3}, {3150,510,2}, {3200,460,1}, {3425,460,1}, {3425,510,2}, {3425,560,3}
-                             , {3425,610,4}, {4000,500,1}, {4100,500,3}, {4100,300,1}, {4250,200,6}, {4650,200,1}, {4850,200,1}, {5400,610,7}
-                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}, {5650,360,2}, {5700,310,1}};
+    int posLadrillo[33][3] = {{550,500,2}, {650,400,2}, {750,300,2}, {1050,300,2}, {1150,400,2}, {1250,500,2}, {1550,200,3}, {1350,330,1}
+                             , {1900,200,3}, {1700,440,4}, {2250,440,1}, {2850,510,2}, {2950,460,1},{2750,560,3}, {3200,460,1}, {3250,510,2}, {3300,560,3}
+                             , {3350,610,4},{2650,610,4}, {4000,500,1}, {4100,500,3}, {4100,300,1}, {4250,200,6}, {4650,200,1}, {4850,200,1}, {5400,610,7}
+                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}, {5650,360,2}, {5700,310,1},{5800,260,1}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
@@ -286,17 +291,17 @@ void PrimerMundo::iniciarEscenaUno()
     }
 
 
-    //Agregamos zanahorias
-    int posZanahoria[24][2] ={{550,450}, {600,450}, {650,450}, {700,450}, {750,450}, {650,250}, {1150,350}, {1200,350}, {1350,150}, {1400,150}
-                         , {1450,150}, {1500,150}, {1550,150}, {1600,150}, {2750,500},{2800,500}, {2850,500}, {2900,500}, {2950,500}, {3000,500}, {2950,450}
-                         , {2950,550}, {2900,400}, {2900,600}};
+  //  Agregamos zanahorias
+    int posZanahoria[30][2] ={{820,300},{910,70},{1030,300},{1350,290},{1560,160},{1610,160},{1660,160},{1910,160},{1960,160}, {2010,160}
+                             ,{2250,400},{2950,420},{3060,280},{3200,420},{4000,460},{4130,460},{4180,460},{4230,460},{4100,260},{4280,160}
+                              ,{4330,160},{4380,160},{4430,160},{4480,160},{4530,160},{4580,160},{4650,160},{4850,160}};
     for (int i = zanahoria.size() - 1; 0 <= i; i--)
     {
         removeItem(zanahoria.at(i));
     }
     zanahoria.clear();
 
-    for (int i= 0; i < 24;i++)
+    for (int i= 0; i < 30;i++)
     {
         zanahoria.append(new Zanahoria());
         zanahoria.last()->setPos(posZanahoria[i][0], posZanahoria[i][1]);
@@ -305,19 +310,34 @@ void PrimerMundo::iniciarEscenaUno()
     }
 
 
-    //Agregamos lechugas
-    int posLechugas[7] = {600, 400, 200, 250, 3295, 4600, 4700};
+   // Agregamos lechugas
+    int posLechugas[8] = {300,1600,1800,2000,2200,2400,2600,3800};
     for (int i = lechuga.size() - 1; 0 <= i; i--)
     {
         removeItem(lechuga.at(i));
     }
     lechuga.clear();
-    for (int i = 0; i < 7; i++)
+    for (int i = 0; i < 8; i++)
     {
         lechuga.append(new Lechuga());
         lechuga.last()->setPos(posLechugas[i], nivelTierra - lechuga.last()->boundingRect().height());
         addItem(lechuga.last());
     }
+
+    // Agregamos Piñas
+      int posPinas[9] = {200,400,1500,1700,1900,2100,2300,3700,3900};
+     for (int i = pina.size() - 1; 0 <= i; i--)
+     {
+         removeItem(pina.at(i));
+     }
+     pina.clear();
+     for (int i = 0; i < 9; i++)
+     {
+         pina.append(new Pina());
+         pina.last()->setPos(posPinas[i], nivelTierra - pina.last()->boundingRect().height());
+         addItem(pina.last());
+     }
+
 
 
     //Agregamos enemigo jabali
@@ -439,6 +459,24 @@ bool PrimerMundo::manejoColisiones()
     return false;
     }
     return 0;
+}
+
+void PrimerMundo::checkColisionMuros()
+{
+    QList<QGraphicsItem*> items = collidingItems(personaje);
+    foreach (QGraphicsItem* item, items) {
+
+        MurosNota * w = qgraphicsitem_cast<MurosNota *>(item);
+        if(w){
+            if(w->pos().x()){
+                if(personaje->pos().x() < w->pos().x())
+                    personaje->setPos(w->pos().x()- personaje->boundingRect().width(),personaje->pos().y());
+                if(personaje->pos().x() > w->pos().x()){
+                    personaje->setPos(w->pos().x() + personaje->boundingRect().width()+96,personaje->pos().y());
+                }
+            }
+        }
+     }
 }
 
 PrimerMundo::~PrimerMundo()

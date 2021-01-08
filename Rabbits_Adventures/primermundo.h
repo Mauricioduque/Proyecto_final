@@ -21,6 +21,7 @@
 #include "murosnota.h"
 #include "zanahoria.h"
 #include "ppconejo.h"
+#include "pina.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -46,6 +47,7 @@ private slots:
     void moverPersonaje();
     void fallPersonaje();
     bool manejoColisiones();
+    void checkColisionMuros();
     QGraphicsItem *collidingPlatforms();
 
 
@@ -64,6 +66,7 @@ private:
 
     Fondo *background=0;
     Fondo *ground;
+    Fondo *danger;
     Zanahoria *zanahoria1;
 
     qreal minX;
@@ -86,6 +89,7 @@ private:
 
     //complementos de la escena
     QList <Lechuga *> lechuga;
+    QList <Pina *> pina;
     QList <Zanahoria *> zanahoria;
     QList <MurosNota*> ladrillosNota;
     QList <Muros*> muros;

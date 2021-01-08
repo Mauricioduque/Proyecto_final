@@ -9,5 +9,8 @@
         <file>zanahoria.png</file>
         <file>ground.png</file>
         <file>fondo.png</file>
+        <file>danger.png</file>
+        <file>piña.png</file>
+        <file>tierra.png</file>
     </qresource>
 </RCC>

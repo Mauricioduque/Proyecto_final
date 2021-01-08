@@ -4,7 +4,7 @@ MurosNota::MurosNota(int _longitud, QGraphicsItem *parent) : QGraphicsItem(paren
   , longitud(_longitud)
 {
     setFlag(ItemClipsToShape);
-    sprite = QPixmap(":/ladrilloNota.png");
+    sprite = QPixmap(":/tierra.png");
     posSprite = 0;
 }
 

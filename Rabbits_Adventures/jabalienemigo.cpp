@@ -33,9 +33,9 @@ void JabaliEnemigo::nextSprite()
 {
     //Manejo de Sprites
     //Distancia en caada sprite
-    posSprite += 54;
+    posSprite += 149;
     //Condicion volver al primer sprite, si sobre pasa la dimension la imagen plana
-    if(posSprite >= 862)
+    if(posSprite >= 1188)
     {
         posSprite = 0;
     }
@@ -44,12 +44,12 @@ void JabaliEnemigo::nextSprite()
 
 QRectF JabaliEnemigo::boundingRect() const {
 
-    return QRectF(0,0,53,50);
+    return QRectF(0,0,149,130);
 }
 
 void JabaliEnemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0, sprite, posSprite, 0,53, 50);
+    painter->drawPixmap(0,0, sprite, posSprite, 0,149, 130);
     setTransformOriginPoint(boundingRect().center());
     Q_UNUSED(widget)
     Q_UNUSED(option)
