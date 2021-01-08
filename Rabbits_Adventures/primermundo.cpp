@@ -482,6 +482,8 @@ void PrimerMundo::checkColisionMuros()
 PrimerMundo::~PrimerMundo()
 {
     delete personaje;
+    delete ground;
+    delete danger;
     delete background;
     lechuga.clear();
     zanahoria.clear();
