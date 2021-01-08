@@ -274,10 +274,10 @@ void PrimerMundo::iniciarEscenaUno()
 
 
     //Agregamos ladrillos
-    int posLadrillo[33][3] = {{550,500,2}, {650,400,2}, {750,300,2}, {1050,300,2}, {1150,400,2}, {1250,500,2}, {1550,200,3}, {1350,330,1}
+    int posLadrillo[30][3] = {{550,500,2}, {650,400,2}, {750,300,2}, {1050,300,2}, {1150,400,2}, {1250,500,2}, {1550,200,3}, {1350,330,1}
                              , {1900,200,3}, {1700,440,4}, {2250,440,1}, {2850,510,2}, {2950,460,1},{2750,560,3}, {3200,460,1}, {3250,510,2}, {3300,560,3}
                              , {3350,610,4},{2650,610,4}, {4000,500,1}, {4100,500,3}, {4100,300,1}, {4250,200,6}, {4650,200,1}, {4850,200,1}, {5400,610,7}
-                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}, {5650,360,2}, {5700,310,1},{5800,260,1}};
+                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
@@ -311,7 +311,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 
    // Agregamos lechugas
-    int posLechugas[8] = {300,1600,1800,2000,2200,2400,2600,3800};
+    int posLechugas[8][2] = {{400,300},{900,70},{1000,300},{1300,290},{1500,160},{1600,160},{1660,160},{1900,160}};
     for (int i = lechuga.size() - 1; 0 <= i; i--)
     {
         removeItem(lechuga.at(i));
@@ -320,7 +320,7 @@ void PrimerMundo::iniciarEscenaUno()
     for (int i = 0; i < 8; i++)
     {
         lechuga.append(new Lechuga());
-        lechuga.last()->setPos(posLechugas[i], nivelTierra - lechuga.last()->boundingRect().height());
+        lechuga.last()->setPos(posLechugas[i][0], posLechugas[i][1]);
         addItem(lechuga.last());
     }
 
