@@ -46,6 +46,7 @@ private slots:
     void moverPersonaje();
     void fallPersonaje();
     bool manejoColisiones();
+    void checkColisionMuros();
     QGraphicsItem *collidingPlatforms();
 
 
