@@ -250,7 +250,6 @@ void PrimerMundo::iniciarEscenaUno()
     background->setPos(0,0);
     addItem(background);
 
-
     //add ground
     ground = new Fondo(QPixmap(":/ground.png"));
     ground->setPos(0,nivelTierra);
@@ -271,19 +270,23 @@ void PrimerMundo::iniciarEscenaUno()
     addItem(zanahoria1);
     startTimer( 100 );
 
+    plataforma = new MurosNota(12);
+    plataforma->setPos(404, nivelTierra );
+
+
 
 
     //Agregamos ladrillos
-    int posLadrillo[33][3] = {{550,500,2}, {650,400,2}, {750,300,2}, {1050,300,2}, {1150,400,2}, {1250,500,2}, {1550,200,3}, {1350,330,1}
-                             , {1900,200,3}, {1700,440,4}, {2250,440,1}, {2850,510,2}, {2950,460,1},{2750,560,3}, {3200,460,1}, {3250,510,2}, {3300,560,3}
+    int posLadrillo[32][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
+                             , {2200,200,3}, {2240,480,4}, {2290,440,1}, {2850,510,2}, {2950,460,1},{2650,560,2}, {3200,460,1}, {3250,510,2}, {3400,560,2}
                              , {3350,610,4},{2650,610,4}, {4000,500,1}, {4100,500,3}, {4100,300,1}, {4250,200,6}, {4650,200,1}, {4850,200,1}, {5400,610,7}
-                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}, {5650,360,2}, {5700,310,1},{5800,260,1}};
+                             , {5450,560,6}, {5500,510,5}, {5550,460,4}, {5600,410,3}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
     }
     ladrillosNota.clear();
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < 32; i++)
     {
         ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
         ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
@@ -292,7 +295,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 
   //  Agregamos zanahorias
-    int posZanahoria[30][2] ={{820,300},{910,70},{1030,300},{1350,290},{1560,160},{1610,160},{1660,160},{1910,160},{1960,160}, {2010,160}
+    int posZanahoria[30][2] ={{820,300},{910,70},{1030,300},{1350,290},{1560,160},{1610,160},{1800,160},{1910,160},{1960,160}, {2010,160}
                              ,{2250,400},{2950,420},{3060,280},{3200,420},{4000,460},{4130,460},{4180,460},{4230,460},{4100,260},{4280,160}
                               ,{4330,160},{4380,160},{4430,160},{4480,160},{4530,160},{4580,160},{4650,160},{4850,160}};
     for (int i = zanahoria.size() - 1; 0 <= i; i--)
@@ -311,7 +314,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 
    // Agregamos lechugas
-    int posLechugas[8] = {300,1600,1800,2000,2200,2400,2600,3800};
+    int posLechugas[8][2] = {{400,300},{900,70},{1000,300},{1300,290},{1500,160},{1600,160},{1660,160},{1900,160}};
     for (int i = lechuga.size() - 1; 0 <= i; i--)
     {
         removeItem(lechuga.at(i));
@@ -320,12 +323,12 @@ void PrimerMundo::iniciarEscenaUno()
     for (int i = 0; i < 8; i++)
     {
         lechuga.append(new Lechuga());
-        lechuga.last()->setPos(posLechugas[i], nivelTierra - lechuga.last()->boundingRect().height());
+        lechuga.last()->setPos(posLechugas[i][0], posLechugas[i][1]);
         addItem(lechuga.last());
     }
 
     // Agregamos Piñas
-      int posPinas[9] = {200,400,1500,1700,1900,2100,2300,3700,3900};
+     int posPinas[9] = {200,400,1500,1700,1900,2100,2300,3700,3900};
      for (int i = pina.size() - 1; 0 <= i; i--)
      {
          removeItem(pina.at(i));
@@ -340,33 +343,22 @@ void PrimerMundo::iniciarEscenaUno()
 
 
 
-    //Agregamos enemigo jabali
-    int posJabali[10] = {800, 1000, 1600, 1800, 2100, 2200, 2300, 2400, 3300, 3700};
-    for (int i = jabali.size() - 1 ; 0 <= i; i--)
-    {
-        removeItem(jabali.at(i));
-    }
-    jabali.clear();
-    for (int i = 0; i < 10; i++)
-    {
-        jabali.append(new JabaliEnemigo());
-        jabali.last()->setPos(posJabali[i], nivelTierra - jabali.last()->boundingRect().height());
-        addItem(jabali.last());
-    }
+//    //Agregamos enemigo jabali
+//     jabali1 = new JabaliEnemigo();
+//     jabali1->setPos(100, nivelTierra-90);
+//     addItem(jabali1);
 
-    //Agregamos enemigo cerdo
-    int posCerdo[10] = {700, 900, 1500, 1700, 2100, 2150, 2350, 2450, 3350, 3750};
-    for (int i = cerdo.size() - 1 ; 0 <= i; i--)
-    {
-        removeItem(cerdo.at(i));
-    }
-    cerdo.clear();
-    for (int i = 0; i < 10; i++)
-    {
-        cerdo.append(new CerdoEnemigo());
-        cerdo.last()->setPos(posCerdo[i], nivelTierra - cerdo.last()->boundingRect().height());
-        addItem(cerdo.last());
-    }
+     //Agregamos enemigo jabali
+      cerdo1 = new CerdoEnemigo(800,1200);
+      cerdo1->setPos(1200, nivelTierra-150);
+      addItem(cerdo1);
+
+      cerdo2 = new CerdoEnemigo(1600,1900);
+      cerdo2->setPos(1900, nivelTierra-280);
+      addItem(cerdo2);
+
+
+
 
 
 }
@@ -374,19 +366,19 @@ void PrimerMundo::iniciarEscenaUno()
 void PrimerMundo::correrEscena(QTimerEvent *)
 {
 
-    for (int i = 0;i < zanahoria.size(); i++)
-    {
-        zanahoria.at(i)->nextSprite();
-    }
+//    for (int i = 0;i < zanahoria.size(); i++)
+//    {
+//        zanahoria.at(i)->nextSprite();
+//    }
 
-    for (int i = 0;i < cerdo.size(); i++)
-    {
-        cerdo.at(i)->nextSprite();
-    }
-    for (int i = 0;i < jabali.size(); i++)
-    {
-        jabali.at(i)->nextSprite();
-    }
+//    for (int i = 0;i < cerdo.size(); i++)
+//    {
+//        cerdo.at(i)->nextSprite();
+//    }
+//    for (int i = 0;i < jabali.size(); i++)
+//    {
+//        jabali.at(i)->nextSprite();
+//    }
 
 //    //mueve los cerdos
 //    for (int i = 0;i < cerdo.size(); i++)
@@ -472,7 +464,7 @@ void PrimerMundo::checkColisionMuros()
                 if(personaje->pos().x() < w->pos().x())
                     personaje->setPos(w->pos().x()- personaje->boundingRect().width(),personaje->pos().y());
                 if(personaje->pos().x() > w->pos().x()){
-                    personaje->setPos(w->pos().x() + personaje->boundingRect().width()+96,personaje->pos().y());
+                    personaje->setPos(w->pos().x() + personaje->boundingRect().width()+126,personaje->pos().y());
                 }
             }
         }
@@ -485,6 +477,8 @@ PrimerMundo::~PrimerMundo()
     delete ground;
     delete danger;
     delete background;
+    delete cerdo1;
+    delete jabali1;
     lechuga.clear();
     zanahoria.clear();
     ladrillosNota.clear();

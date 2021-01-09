@@ -10,7 +10,7 @@ MainWindow::MainWindow(){
 
     createScene();
     setCentralWidget(view);
-    setWindowTitle("Super Mario");
+    setWindowTitle("Rabbits Adventures");
 
 }
 
