@@ -1,32 +1,15 @@
 #include "cerdoenemigo.h"
 
-CerdoEnemigo::CerdoEnemigo(QGraphicsItem *parent) : QGraphicsItem(parent)
+CerdoEnemigo::CerdoEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
+    inicioPos=inicio;
+    finPos=fin;
     direccion = 1;
     setFlag(ItemClipsToShape);
     sprite = QPixmap(":/cerdo.png");
-}
-
-int CerdoEnemigo::getDireccion()
-{
-    return direccion;
-}
-
-void CerdoEnemigo::setDireccion(int inDireccion)
-{
-    if(direccion != inDireccion)
-    {
-        direccion = inDireccion;
-        if(direccion != 0)
-        {
-            QTransform transforma;
-            if(direccion == -1)
-            {
-                transforma.scale(-1,1);
-            }
-            setTransform(transforma);
-        }
-    }
+    QTimer *timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(nextSprite()));
+    timer->start(100);
 }
 
 void CerdoEnemigo::nextSprite()
@@ -39,17 +22,23 @@ void CerdoEnemigo::nextSprite()
     {
         posSprite = 0;
     }
+    if(this->pos().x() < inicioPos|| this->pos().x() > finPos) {
+        direccion = -direccion;
+        setTransform(QTransform(-direccion, 0, 0, 1, boundingRect().width(), 0));
+    }
+    setPos(this->pos().x() + (direccion*7), this->pos().y());
 }
+
 
 
 QRectF CerdoEnemigo::boundingRect() const {
 
-    return QRectF(0,0,129,150);
+    return QRectF(0,0,122,150);
 }
 
 void CerdoEnemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0, sprite, posSprite, 0,129, 150);
+    painter->drawPixmap(0,0, sprite, posSprite, 0,122, 150);
     setTransformOriginPoint(boundingRect().center());
     Q_UNUSED(widget)
     Q_UNUSED(option)

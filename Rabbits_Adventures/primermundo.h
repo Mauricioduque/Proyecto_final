@@ -83,6 +83,10 @@ private:
     int m_jumpHeight=200;
 
     QGraphicsItem *m_platform;
+    MurosNota *plataforma;
+    JabaliEnemigo *jabali1;
+    CerdoEnemigo *cerdo1;
+    CerdoEnemigo *cerdo2;
 
 
     QScrollBar *scroll;
