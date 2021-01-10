@@ -14,7 +14,6 @@ public:
     enum { Type = UserType + 3 };
     Zanahoria(QGraphicsItem *parent = 0);
     ~Zanahoria();
-    void nextSprite();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int type() const;
