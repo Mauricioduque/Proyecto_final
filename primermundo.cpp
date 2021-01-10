@@ -367,10 +367,7 @@ void PrimerMundo::iniciarEscenaUno()
         cerdo.last()->setPos(posCerdo[i], nivelTierra - cerdo.last()->boundingRect().height());
         addItem(cerdo.last());
     }
-    //Agregamos Águila enemiga
-      aguila=new Aguila(6000,7400);
-      aguila->setPos(7400,50);
-      addItem(aguila);
+  
 
 
 }
