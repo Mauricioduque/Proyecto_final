@@ -67,7 +67,6 @@ private:
     Fondo *background=0;
     Fondo *ground;
     Fondo *danger;
-    Zanahoria *zanahoria1;
 
     qreal minX;
     qreal maxX;
@@ -83,10 +82,14 @@ private:
     int m_jumpHeight=200;
 
     QGraphicsItem *m_platform;
-    MurosNota *plataforma;
     JabaliEnemigo *jabali1;
     CerdoEnemigo *cerdo1;
     CerdoEnemigo *cerdo2;
+    CerdoEnemigo *cerdo3;
+    CerdoEnemigo *cerdo4;
+    CerdoEnemigo *cerdo5;
+    CerdoEnemigo *cerdo6;
+    CerdoEnemigo *cerdo7;
 
 
     QScrollBar *scroll;
