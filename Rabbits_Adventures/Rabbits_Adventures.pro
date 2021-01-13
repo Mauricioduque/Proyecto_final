@@ -21,6 +21,7 @@ SOURCES += \
     pina.cpp \
     ppconejo.cpp \
     primermundo.cpp \
+    puntaje.cpp \
     view.cpp \
     zanahoria.cpp
 
@@ -36,6 +37,7 @@ HEADERS += \
     pina.h \
     ppconejo.h \
     primermundo.h \
+    puntaje.h \
     view.h \
     zanahoria.h
 

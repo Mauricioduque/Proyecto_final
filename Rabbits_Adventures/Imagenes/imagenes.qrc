@@ -12,5 +12,8 @@
         <file>danger.png</file>
         <file>piña.png</file>
         <file>tierra.png</file>
+        <file>scoretext.png</file>
+        <file>CoinCount2.ttf</file>
     </qresource>
+    <qresource prefix="/font"/>
 </RCC>

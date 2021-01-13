@@ -104,9 +104,22 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
     }
 }
 
+QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, int pos)
+{
+    QList<Zanahoria *> aux;
+    for (int i=0;i<zanahoria.size() ;i++ ) {
+        if (i!=pos){
+            aux.push_back(zanahoria.at(i));
+        }
+    }
+    return aux;
+
+}
+
 void PrimerMundo::moverPersonaje()
 {
     checkColisionMuros();
+    checkColZanahoria();
 
     if(personaje->isFalling()){
         return;
@@ -135,12 +148,14 @@ void PrimerMundo::moverPersonaje()
 
         if(diff > 800){
 
-            if(scroll->value() > 6720){
-                qDebug()<<"6720";
-                return;
-            }
+//            if(scroll->value() > 6720){
+//                qDebug()<<"6720";
+//                return;
+//            }
             scroll->setValue(dx + scroll->value());
             background->setPos(dx + background->pos().x(), background->y());
+            Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
+            LogoPuntaje->setPos(dx + LogoPuntaje->pos().x(), LogoPuntaje->y());
         }
     }
 
@@ -161,6 +176,9 @@ void PrimerMundo::moverPersonaje()
 
             scroll->setValue(dx + scroll->value());
             background->setPos(dx + background->pos().x(), background->y());
+            Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
+            LogoPuntaje->setPos(dx + LogoPuntaje->pos().x(), LogoPuntaje->y());
+
         }
     }
 
@@ -250,15 +268,31 @@ void PrimerMundo::iniciarEscenaUno()
     background->setPos(0,0);
     addItem(background);
 
+
     //add ground
     ground = new Fondo(QPixmap(":/ground.png"));
     ground->setPos(0,nivelTierra);
     addItem(ground);
 
+    //se agrega puntaje
+    LogoPuntaje = new Fondo(QPixmap(":/scoretext.png"));
+    LogoPuntaje->setPos(850, nivelTierra -647 );
+    addItem(LogoPuntaje);
+
+
+    Puntaje = new puntaje();
+    Puntaje->setPos(980, nivelTierra - Puntaje->boundingRect().height()-610);
+
+    addItem(Puntaje);
+
     //add señal
     danger = new Fondo(QPixmap(":/danger.png"));
     danger->setPos(5950,360);
     addItem(danger);
+
+
+
+
 
     //AgregarPersonaje
     personaje = new PPConejo();
@@ -481,8 +515,22 @@ void PrimerMundo::checkColisionMuros()
                 }
             }
         }
+    }
+}
+
+void PrimerMundo::checkColZanahoria()
+{
+    for (int i=0;i<zanahoria.size() ;i++ ) {
+         if(personaje->collidesWithItem(zanahoria.at(i))){
+            removeItem(zanahoria.at(i));
+            Puntaje->incrementar();
+            zanahoria=eliminarZanahoria(zanahoria,i);
+
+         }
      }
 }
+
+
 
 PrimerMundo::~PrimerMundo()
 {

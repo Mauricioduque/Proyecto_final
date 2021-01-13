@@ -22,6 +22,7 @@
 #include "zanahoria.h"
 #include "ppconejo.h"
 #include "pina.h"
+#include "puntaje.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -48,6 +49,7 @@ private slots:
     void fallPersonaje();
     bool manejoColisiones();
     void checkColisionMuros();
+    void checkColZanahoria();
     QGraphicsItem *collidingPlatforms();
 
 
@@ -67,6 +69,9 @@ private:
     Fondo *background=0;
     Fondo *ground;
     Fondo *danger;
+    Fondo *LogoPuntaje;
+
+    puntaje *Puntaje;
 
     qreal minX;
     qreal maxX;
@@ -102,6 +107,7 @@ private:
     QList <Muros*> muros;
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
+    QList<Zanahoria *> eliminarZanahoria(QList<Zanahoria *>zanahoria,int pos);
     bool falling;
     bool jumping;
 };
