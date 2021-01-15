@@ -1,5 +1,6 @@
 #include "ppconejo.h"
 #include <iostream>
+#include <QDebug>
 
 PPConejo::PPConejo(QGraphicsItem *parent) : QGraphicsItem(parent),m_StandingDirection(), mState(Standing){
 
@@ -68,6 +69,11 @@ void PPConejo::nextFrame(){
     }
 }
 
+void PPConejo::set_m_direction(int mdirection)
+{
+    m_direction=mdirection;
+}
+
 QRectF PPConejo::boundingRect() const{
 
     return QRectF(0,0,63,73);
@@ -89,11 +95,8 @@ void PPConejo::addDirection(int direction){
     m_direction += direction;
 
     if (0 != m_direction){
-        if (-1 == m_direction)
-
-            setTransform(QTransform(-1, 0, 0, 1, boundingRect().width(), 0));
-        else
-            setTransform(QTransform());
+        if (-1 == m_direction) setTransform(QTransform(-1, 0, 0, 1, boundingRect().width(), 0));
+        else setTransform(QTransform());
     }
 }
 

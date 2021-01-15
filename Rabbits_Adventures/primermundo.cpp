@@ -1,22 +1,24 @@
 #include "primermundo.h"
 #include <iostream>
-PrimerMundo::PrimerMundo(QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
+PrimerMundo::PrimerMundo( QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
   , m_jumpAnimation(new QPropertyAnimation(this))
   , m_platform()
   , scroll(s)
 
-
-
 {
+
+
+    Vida=5;
     iniciarEscenaUno();
 
     //inicializamos timer
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
+    timer->setInterval(20);
 
-    timer.setInterval(20);
-    connect(&timer, &QTimer::timeout, this, &PrimerMundo::moverPersonaje);
-
-    mFallTimer.setInterval(20);
-    connect(&mFallTimer, &QTimer::timeout, this, &PrimerMundo::fallPersonaje);
+    mFallTimer = new QTimer(this);
+    connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
+    mFallTimer->setInterval(20);
 
     m_jumpAnimation->setTargetObject(this);
     m_jumpAnimation->setPropertyName("jumpFactor");
@@ -29,9 +31,6 @@ PrimerMundo::PrimerMundo(QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,
     connect(this, &PrimerMundo::jumpFactorChanged, this, &PrimerMundo::jumpPersonaje);
     connect(m_jumpAnimation, &QPropertyAnimation::stateChanged, this, &PrimerMundo::jumpStatusChanged);
 
-    jumping = false;
-    falling = false;
-
     personaje->addStandingDirection(1);
 
 }
@@ -43,6 +42,7 @@ void PrimerMundo::keyPressEvent(QKeyEvent *event){
     switch (event->key()){
         case Qt::Key_Right:
         {
+            reinicio=true;
             personaje->addDirection(1);
             personaje->addStandingDirection(1);
             checkTimer();
@@ -52,6 +52,7 @@ void PrimerMundo::keyPressEvent(QKeyEvent *event){
 
         case Qt::Key_Left:
         {
+            reinicio=false;
             personaje->addDirection(-1);
             personaje->addStandingDirection(-1);
             checkTimer();
@@ -60,9 +61,10 @@ void PrimerMundo::keyPressEvent(QKeyEvent *event){
 
         case Qt::Key_Space:
         {
-            if(mFallTimer.isActive()){
+            if(mFallTimer->isActive()){
                 return;
-            }else{
+            }
+            else{
                 if (QAbstractAnimation::Stopped == m_jumpAnimation->state()){
                     m_jumpAnimation->start();
 
@@ -80,19 +82,20 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
         return;
-
     switch (event->key())
     {
         case Qt::Key_Right:
             {
-            personaje->addDirection(-1);
-            personaje->addStandingDirection(1);
-            checkTimer();
-            break;
+                reinicio=true;
+                personaje->addDirection(-1);
+                personaje->addStandingDirection(1);
+                checkTimer();
+                break;
             }
 
         case Qt::Key_Left:
             {
+            reinicio=false;
             personaje->addDirection(1);
             personaje->addStandingDirection(-1);
             checkTimer();
@@ -102,6 +105,7 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
         default:
             break;
     }
+
 }
 
 QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, int pos)
@@ -127,13 +131,15 @@ void PrimerMundo::moverPersonaje()
 
     personaje->nextFrame();
 
-    int direction = personaje->direction();
+
+    direction = personaje->direction();
+
     if (0 == direction) return;
 
     if(!(m_platform && personaje->isTouchingPlatform(m_platform))&& m_jumpAnimation->state() == QAbstractAnimation::Stopped){
         if(m_platform){
             personaje->fall();
-            mFallTimer.start();
+            mFallTimer->start();
         }
     }
 
@@ -156,6 +162,8 @@ void PrimerMundo::moverPersonaje()
             background->setPos(dx + background->pos().x(), background->y());
             Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
             LogoPuntaje->setPos(dx + LogoPuntaje->pos().x(), LogoPuntaje->y());
+            vidas_->setPos(dx + vidas_->pos().x(), vidas_->y());
+            LogoVida->setPos(dx + LogoVida->pos().x(), LogoVida->y());
         }
     }
 
@@ -178,6 +186,8 @@ void PrimerMundo::moverPersonaje()
             background->setPos(dx + background->pos().x(), background->y());
             Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
             LogoPuntaje->setPos(dx + LogoPuntaje->pos().x(), LogoPuntaje->y());
+            vidas_->setPos(dx + vidas_->pos().x(), vidas_->y());
+            LogoVida->setPos(dx + LogoVida->pos().x(), LogoVida->y());
 
         }
     }
@@ -196,12 +206,12 @@ void PrimerMundo::fallPersonaje()
     personaje->setPos(personaje->pos().x(), personaje->pos().y() +30);
     QGraphicsItem *item = collidingPlatforms();
     if(item && manejoColisiones()){
-       mFallTimer.stop();
+       mFallTimer->stop();
        personaje->walk();
     }
     else if(personaje->pos().y() + personaje->boundingRect().height() >= nivelTierra){
             personaje->setPos(personaje->pos().x(), nivelTierra - personaje->boundingRect().height());
-            mFallTimer.stop();
+            mFallTimer->stop();
             personaje->walk();
             m_platform = 0;
         }
@@ -235,7 +245,7 @@ void PrimerMundo::jumpPersonaje()
         }
     }
 
-    if(mFallTimer.isActive()){
+    if(mFallTimer->isActive()){
         return;
     }
     qreal y = (nivelTierra - personaje->boundingRect().height()) - m_jumpAnimation->currentValue().toReal() * m_jumpHeight;
@@ -248,7 +258,7 @@ void PrimerMundo::jumpPersonaje()
                 }
                 if(personaje->pos().y() <nivelTierra){
                     personaje->fall();
-                    mFallTimer.start();
+                    mFallTimer->start();
                     return;
                 }
             }
@@ -259,9 +269,11 @@ void PrimerMundo::jumpPersonaje()
 
 void PrimerMundo::iniciarEscenaUno()
 {
-    setSceneRect(0,0,8000,720);
 
+    setSceneRect(0,0,8000,720);
     nivelTierra = 660;
+
+
 
     //Ponemos posicion incial del cielo
     background=new Fondo(QPixmap(":/fondo.png"));
@@ -276,28 +288,33 @@ void PrimerMundo::iniciarEscenaUno()
 
     //se agrega puntaje
     LogoPuntaje = new Fondo(QPixmap(":/scoretext.png"));
-    LogoPuntaje->setPos(850, nivelTierra -647 );
+    LogoPuntaje->setPos(870, nivelTierra -647 );
     addItem(LogoPuntaje);
-
-
     Puntaje = new puntaje();
     Puntaje->setPos(980, nivelTierra - Puntaje->boundingRect().height()-610);
-
     addItem(Puntaje);
+
+    //Se agrega vidas
+    LogoVida = new Fondo(QPixmap(":/vida.png"));
+    LogoVida->setPos(200, nivelTierra - 647 );
+    addItem(LogoVida);
+
+    vidas_ = new vidas(Vida);
+    Vida--;
+    vidas_->setPos(400, nivelTierra - vidas_->boundingRect().height()-610);
+    addItem(vidas_);
+
 
     //add señal
     danger = new Fondo(QPixmap(":/danger.png"));
     danger->setPos(5950,360);
     addItem(danger);
 
-
-
-
-
     //AgregarPersonaje
     personaje = new PPConejo();
     personaje->setPos(50, nivelTierra - personaje->boundingRect().height() );
     addItem(personaje);
+
 
     startTimer( 100 );
 
@@ -340,75 +357,49 @@ void PrimerMundo::iniciarEscenaUno()
     }
 
 
-   // Agregamos lechugas
-//    int posLechugas[8][2] = {{400,300},{900,70},{1000,300},{1300,290},{1500,160},{1600,160},{1660,160},{1900,160}};
-//    for (int i = lechuga.size() - 1; 0 <= i; i--)
-//    {
-//        removeItem(lechuga.at(i));
-//    }
-//    lechuga.clear();
-//    for (int i = 0; i < 8; i++)
-//    {
-//        lechuga.append(new Lechuga());
-//        lechuga.last()->setPos(posLechugas[i][0], posLechugas[i][1]);
-//        addItem(lechuga.last());
-//    }
-
-    // Agregamos Piñas
-//     int posPinas[9] = {200,400,1500,1700,1900,2100,2300,3700,3900};
-//     for (int i = pina.size() - 1; 0 <= i; i--)
-//     {
-//         removeItem(pina.at(i));
-//     }
-//     pina.clear();
-//     for (int i = 0; i < 9; i++)
-//     {
-//         pina.append(new Pina());
-//         pina.last()->setPos(posPinas[i], nivelTierra - pina.last()->boundingRect().height());
-//         addItem(pina.last());
-//     }
-
-
-
-//    //Agregamos enemigo jabali
-//     jabali1 = new JabaliEnemigo();
-//     jabali1->setPos(100, nivelTierra-90);
-//     addItem(jabali1);
-
      //Agregamos los cerdos enemigos
       cerdo1 = new CerdoEnemigo(800,1200);
       cerdo1->setPos(1200, nivelTierra-150);
       addItem(cerdo1);
+      connect(this->cerdo1, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo2 = new CerdoEnemigo(1600,1900);
       cerdo2->setPos(1900, nivelTierra-280);
       addItem(cerdo2);
+      connect(this->cerdo2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo3 = new CerdoEnemigo(2100,2400);
       cerdo3->setPos(2400, nivelTierra-150);
       addItem(cerdo3);
+      connect(this->cerdo3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo4 = new CerdoEnemigo(3250,3500);
       cerdo4->setPos(3500, nivelTierra-150);
       addItem(cerdo4);
+      connect(this->cerdo4, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo5 = new CerdoEnemigo(3950,4100);
       cerdo5->setPos(4100, nivelTierra-150);
       addItem(cerdo5);
+      connect(this->cerdo5, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo6 = new CerdoEnemigo(4900,5300);
       cerdo6->setPos(5300, nivelTierra-150);
       addItem(cerdo6);
+      connect(this->cerdo6, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo7 = new CerdoEnemigo(4900,5100);
       cerdo7->setPos(5100, nivelTierra-320);
       addItem(cerdo7);
+      connect(this->cerdo7, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
 
 
 
 
 }
+
+
 
 void PrimerMundo::correrEscena(QTimerEvent *)
 {
@@ -459,10 +450,10 @@ void PrimerMundo::checkTimer()
 
     if (0 == personaje->direction()){
         personaje->stand();
-        timer.stop();
+        timer->stop();
     }
-    else if (!timer.isActive()){
-        timer.start();
+    else if (!timer->isActive()){
+        timer->start();
         personaje->walk();
     }
 
@@ -527,10 +518,62 @@ void PrimerMundo::checkColZanahoria()
             zanahoria=eliminarZanahoria(zanahoria,i);
 
          }
-     }
+    }
 }
 
+void PrimerMundo::Estado(int n)
+{
+    int number = n;
+    if(number == 0){
+        return;
+    }
+    else if(number == 1){
+        reiniciarEscenaUno();
 
+
+    }
+    else return;
+}
+
+void PrimerMundo::reiniciarEscenaUno()
+{
+    delete personaje;
+    delete timer;
+    delete mFallTimer;
+    delete background;
+    delete ground;
+    delete danger;
+    delete Puntaje;
+    delete LogoPuntaje;
+    delete LogoVida;
+    delete cerdo1;
+    delete cerdo2;
+    delete cerdo3;
+    delete cerdo4;
+    delete cerdo5;
+    delete cerdo6;
+    delete cerdo7;
+    m_platform=0;
+    m_jumpAnimation->stop();
+    scroll->setValue(0);
+    iniciarEscenaUno();
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
+    timer->setInterval(20);
+    mFallTimer = new QTimer(this);
+    connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
+    mFallTimer->setInterval(20);
+    if(reinicio){
+        personaje->set_m_direction(0);
+        personaje->addDirection(1);
+    }
+    else {
+
+        personaje->set_m_direction(0);
+        personaje->addDirection(-1);
+    }
+
+}
 
 PrimerMundo::~PrimerMundo()
 {
@@ -539,6 +582,9 @@ PrimerMundo::~PrimerMundo()
     delete danger;
     delete background;
     delete cerdo1;
+    delete cerdo2;
+    delete cerdo3;
+    delete cerdo4;
     delete jabali1;
     lechuga.clear();
     zanahoria.clear();

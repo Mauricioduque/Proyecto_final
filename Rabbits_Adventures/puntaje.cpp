@@ -1,6 +1,4 @@
 #include "puntaje.h"
-#include <QFont>
-#include<QFontDatabase>
 
 puntaje::puntaje(QGraphicsItem *parent): QGraphicsTextItem(parent)
 {
