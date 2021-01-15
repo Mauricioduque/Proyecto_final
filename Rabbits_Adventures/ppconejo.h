@@ -17,6 +17,7 @@ public:
     void addStandingDirection(int standingDirection);
     void addDirection(int direction);
     void nextFrame();
+    void set_m_direction(int mdirection);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     bool isTouchingFoot(QGraphicsItem *item);

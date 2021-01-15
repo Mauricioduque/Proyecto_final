@@ -20,6 +20,9 @@ public:
 public slots:
     void nextSprite();
 
+signals:
+    void estadoJuego(int);
+
 private:
     QPixmap sprite;
     QRectF Plataforma;

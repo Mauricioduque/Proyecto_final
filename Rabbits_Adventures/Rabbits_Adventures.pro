@@ -22,6 +22,7 @@ SOURCES += \
     ppconejo.cpp \
     primermundo.cpp \
     puntaje.cpp \
+    vidas.cpp \
     view.cpp \
     zanahoria.cpp
 
@@ -38,6 +39,7 @@ HEADERS += \
     ppconejo.h \
     primermundo.h \
     puntaje.h \
+    vidas.h \
     view.h \
     zanahoria.h
 

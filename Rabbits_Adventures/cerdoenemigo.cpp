@@ -1,4 +1,5 @@
 #include "cerdoenemigo.h"
+#include "ppconejo.h"
 
 CerdoEnemigo::CerdoEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
@@ -27,6 +28,17 @@ void CerdoEnemigo::nextSprite()
         setTransform(QTransform(-direccion, 0, 0, 1, boundingRect().width(), 0));
     }
     setPos(this->pos().x() + (direccion*7), this->pos().y());
+
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+
+    //If one of the colliding items is an Enemy, destroy both the bullet and the enemy
+    for (int i = 0, n = colliding_items.size(); i < n; ++i){
+        if (typeid(*(colliding_items[i])) == typeid(PPConejo)){
+
+            emit estadoJuego(1);
+            return;
+        }
+    }
 }
 
 

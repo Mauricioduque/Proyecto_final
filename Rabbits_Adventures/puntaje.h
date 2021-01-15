@@ -1,6 +1,8 @@
 #ifndef PUNTAJE_H
 #define PUNTAJE_H
 
+#include <QFont>
+#include<QFontDatabase>
 
 #include <QGraphicsTextItem>
 

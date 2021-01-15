@@ -23,6 +23,8 @@
 #include "ppconejo.h"
 #include "pina.h"
 #include "puntaje.h"
+#include "vidas.h"
+
 
 
 class PrimerMundo :public QGraphicsScene
@@ -36,6 +38,7 @@ public:
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
     void iniciarEscenaUno();
+    void reiniciarEscenaUno();
     void correrEscena(QTimerEvent *);
 
 private:
@@ -50,6 +53,7 @@ private slots:
     bool manejoColisiones();
     void checkColisionMuros();
     void checkColZanahoria();
+    void Estado(int n);
     QGraphicsItem *collidingPlatforms();
 
 
@@ -63,6 +67,9 @@ signals:
 
 private:
     int anchoEscena=6600;
+    int direction;
+    bool reinicio=false;
+    bool flagre;
 
     PPConejo *personaje;
 
@@ -70,8 +77,10 @@ private:
     Fondo *ground;
     Fondo *danger;
     Fondo *LogoPuntaje;
+    Fondo *LogoVida;
 
     puntaje *Puntaje;
+    vidas *vidas_;
 
     qreal minX;
     qreal maxX;
@@ -79,9 +88,10 @@ private:
     qreal posicionX;
     int velocidad=7;
     int desplazamientoMundo=0;
+    int Vida=0;
 
-    QTimer timer;
-    QTimer mFallTimer;
+    QTimer *timer;
+    QTimer *mFallTimer;
     QPropertyAnimation *m_jumpAnimation;
     qreal m_jumpFactor;
     int m_jumpHeight=200;
@@ -99,6 +109,8 @@ private:
 
     QScrollBar *scroll;
 
+
+
     //complementos de la escena
     QList <Lechuga *> lechuga;
     QList <Pina *> pina;
@@ -108,8 +120,7 @@ private:
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
     QList<Zanahoria *> eliminarZanahoria(QList<Zanahoria *>zanahoria,int pos);
-    bool falling;
-    bool jumping;
+
 };
 
 #endif // PRIMERMUNDO_H
