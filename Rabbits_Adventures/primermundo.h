@@ -22,6 +22,8 @@
 #include "zanahoria.h"
 #include "ppconejo.h"
 #include "pina.h"
+#include "aguila.h"
+#include "roca.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -90,6 +92,11 @@ private:
     CerdoEnemigo *cerdo5;
     CerdoEnemigo *cerdo6;
     CerdoEnemigo *cerdo7;
+
+    Aguila *aguila;
+    Aguila *aguila2;
+    Aguila *aguila3;
+    Roca *roca;
 
 
     QScrollBar *scroll;

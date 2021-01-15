@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    aguila.cpp \
     cerdoenemigo.cpp \
     fondo.cpp \
     inicio.cpp \
@@ -21,10 +22,12 @@ SOURCES += \
     pina.cpp \
     ppconejo.cpp \
     primermundo.cpp \
+    roca.cpp \
     view.cpp \
     zanahoria.cpp
 
 HEADERS += \
+    aguila.h \
     cerdoenemigo.h \
     fondo.h \
     inicio.h \
@@ -36,6 +39,7 @@ HEADERS += \
     pina.h \
     ppconejo.h \
     primermundo.h \
+    roca.h \
     view.h \
     zanahoria.h
 
