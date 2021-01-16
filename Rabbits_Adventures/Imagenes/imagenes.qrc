@@ -13,5 +13,7 @@
         <file>piña.png</file>
         <file>tierra.png</file>
         <file>roca.png</file>
+        <file>agu.png</file>
+        <file>agu2.png</file>
     </qresource>
 </RCC>

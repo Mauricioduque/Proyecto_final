@@ -7,7 +7,7 @@ Aguila::Aguila(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
     finPos=fin;
     direccion = 1;
     setFlag(ItemClipsToShape);
-    sprite = QPixmap(":/aguila.png");
+    sprite = QPixmap(":/agu2.png");
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nextSprite()));
     timer->start(100);
@@ -35,7 +35,7 @@ void Aguila::nextSprite()
     }
     setPos(this->pos().x() + (direccion*7), this->pos().y());
     //crea la roca
-    if((posx<=6500)||(posx>=6700 & posx<=7400)||(posx>=7600 & posx<=7900))tirar_roca();
+    if((posx<=6500)||((posx>=6700) & (posx<=7400))||((posx>=7600) & (posx<=7900)))tirar_roca();
 
 
 
