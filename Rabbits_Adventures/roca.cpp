@@ -42,19 +42,20 @@ int Roca::type() const
 
 void Roca::move()
 {
-   // posy=y();
-    posx=x();
-//    QList<QGraphicsItem *> colliding_items = collidingItems();
-//    for(int i=0; i < colliding_items.size(); ++i){
-//        if(typeid (*(colliding_items[i]))== typeid (PPConejo)){
-//            //incrementa el puntaje
-//           // juego->score->increase();
-//            scene()->removeItem(colliding_items[i]);
-//            scene()->removeItem(this);
-//            delete colliding_items[i];
-//            delete this;
-//        }
-//    }
+     // posy=y();
+
+    float t=4*T;
+    //posx=x();
+    //Verificación de colisión del conejo con la piedras
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+    for(int i=0; i < colliding_items.size(); ++i){
+        if(typeid (*(colliding_items[i]))== typeid (PPConejo)){
+            scene()->removeItem(colliding_items[i]);
+            scene()->removeItem(this);
+            delete colliding_items[i];
+            delete this;
+        }
+    }
 
    //ECUACIONES DE MOVIMIENTO:caída libre
    //Y(t)=y(t-1)+v(t-1)*T-g/2*T*T
