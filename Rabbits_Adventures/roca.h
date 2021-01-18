@@ -19,11 +19,13 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int type() const;
     // variables y constantes para ecuación de caida libre:
-    float posy,posx,v;
+    float posy=150,posx,v=0;
     float H=150; // altura inicial
-    float g=10; //aceleración gravitatoria
-    float T=0.05;//tiempo
-
+    float g=28; //aceleración gravitatoria
+    float T=0.05;//periodo
+    int var=0;
+    float Vx=70; //velocidad del aguila
+    int direccion=1;
 
 public slots:
     void move();
