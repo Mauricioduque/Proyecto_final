@@ -11,6 +11,7 @@ Aguila::Aguila(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nextSprite()));
     timer->start(100);
+
 //    QTimer *timer3=new QTimer(this);
 //    connect(timer,SIGNAL(timeout()),this,SLOT(tirar_roca()));
 //    timer3->start(10000);
@@ -19,6 +20,7 @@ Aguila::Aguila(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 
 void Aguila::nextSprite()
 {
+
     //Manejo de Sprites
     //Distancia en caada sprite
     posx=x();
@@ -35,21 +37,37 @@ void Aguila::nextSprite()
     }
     setPos(this->pos().x() + (direccion*7), this->pos().y());
     //crea la roca
-    if((posx<=6500)||((posx>=6700) & (posx<=7400))||((posx>=7600) & (posx<=7900)))tirar_roca();
+    if((posx<=6300)||((posx>=6700) && (posx<=7000))||((posx>=7600) && (posx<=7900))){
+        if(f==false){
+            f=true;
+            tirar_roca();
+            roca->var=1;
 
+        }
+        else if (roca->var==0){
+            scene()->removeItem(roca);
+            tirar_roca();
+            roca->var=1;
+        }
 
-
+    }
 
 }
 
 
 void Aguila::tirar_roca(){
 //Agregamos roca
-      roca= new Roca();
+
+
       if(direccion==-1){
+         roca= new Roca(pos().x()+ (direccion*7)+200);
          roca->setPos(this->pos().x()+ (direccion*7)+200,150);
+         roca->direccion=direccion;
       }
-      else roca->setPos(this->pos().x()+ (direccion*7),150);
+      else{
+          roca= new Roca(pos().x()+ (direccion*7));
+          roca->setPos(this->pos().x()+ (direccion*7),150);
+      }
 
       scene()->addItem(roca);
 
