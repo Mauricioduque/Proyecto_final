@@ -35,6 +35,7 @@ PrimerMundo::PrimerMundo( QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000
 
 }
 
+
 void PrimerMundo::keyPressEvent(QKeyEvent *event){
     if (event->isAutoRepeat())
     return;
@@ -528,7 +529,13 @@ void PrimerMundo::Estado(int n)
         return;
     }
     else if(number == 1){
-        reiniciarEscenaUno();
+        if (Vida==0){
+            reiniciarEscenaUno();
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaUno();
 
 
     }
