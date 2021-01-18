@@ -56,12 +56,19 @@ void Roca::move()
 //        }
 //    }
 
-    posy=H-(0.5*g*T*T);
-    setPos(posx,y()+posy);
-  //  setPos(x()-30,y()+150);
+   //ECUACIONES DE MOVIMIENTO:caída libre
+   //Y(t)=y(t-1)+v(t-1)*T-g/2*T*T
+    //V(t)=V(t-1)-g*T
+   // posy=H-(0.5*g*T*T);
+    posy=posy+v*t+(0.5*g*t*t);
+    v=v+g*t;
+    posx=posx+Vx*T*direccion;
+    setPos(posx,posy);
+
     if(pos().y()>600){
-        scene()->removeItem(this);
-        delete this;
+        var=0;
+//        scene()->removeItem(this);
+//        delete this;
     }
 }
 //void Roca::move()
