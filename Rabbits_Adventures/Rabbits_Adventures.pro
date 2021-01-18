@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     cerdoenemigo.cpp \
     fondo.cpp \
+    gameover.cpp \
     inicio.cpp \
     jabalienemigo.cpp \
     lechuga.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 HEADERS += \
     cerdoenemigo.h \
     fondo.h \
+    gameover.h \
     inicio.h \
     jabalienemigo.h \
     lechuga.h \
@@ -43,7 +45,8 @@ HEADERS += \
     view.h \
     zanahoria.h
 
-FORMS +=
+FORMS += \
+    gameover.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

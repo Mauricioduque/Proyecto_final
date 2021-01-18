@@ -24,7 +24,7 @@
 #include "pina.h"
 #include "puntaje.h"
 #include "vidas.h"
-
+#include "gameover.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -108,6 +108,7 @@ private:
 
 
     QScrollBar *scroll;
+    GameOver *gameOverWindow;
 
 
 
