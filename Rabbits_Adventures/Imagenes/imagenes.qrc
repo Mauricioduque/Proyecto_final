@@ -15,6 +15,9 @@
         <file>scoretext.png</file>
         <file>CoinCount2.ttf</file>
         <file>vida.png</file>
+        <file>agu2.png</file>
+        <file>flag.png</file>
+        <file>roca.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>
