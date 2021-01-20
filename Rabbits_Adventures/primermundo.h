@@ -24,6 +24,9 @@
 #include "pina.h"
 #include "puntaje.h"
 #include "vidas.h"
+#include "aguila.h"
+#include "roca.h"
+#include "flag.h"
 #include "gameover.h"
 
 
@@ -39,7 +42,6 @@ public:
     void setJumpFactor(const qreal &jumpFactor);
     void iniciarEscenaUno();
     void reiniciarEscenaUno();
-    void correrEscena(QTimerEvent *);
 
 private:
     void checkTimer();
@@ -69,7 +71,7 @@ private:
     int anchoEscena=6600;
     int direction;
     bool reinicio=false;
-    bool flagre;
+    bool quieto=false;
 
     PPConejo *personaje;
 
@@ -95,6 +97,12 @@ private:
     QPropertyAnimation *m_jumpAnimation;
     qreal m_jumpFactor;
     int m_jumpHeight=200;
+
+    Aguila *aguila;
+    Aguila *aguila2;
+    Aguila *aguila3;
+    Roca *roca;
+    Flag *flag;
 
     QGraphicsItem *m_platform;
     JabaliEnemigo *jabali1;

@@ -147,18 +147,15 @@ void PrimerMundo::moverPersonaje()
     const int dx = direction * velocidad;
     if (direction > 0){
 
-        if(personaje->pos().x()==7956){
+        if(personaje->pos().x()==8100){
             return;
         }
         personaje->moveBy(dx, 0);
         int diff = personaje->pos().x() - scroll->value();
 
-        if(diff > 800){
+        if(diff > 850){
 
-//            if(scroll->value() > 6720){
-//                qDebug()<<"6720";
-//                return;
-//            }
+
             scroll->setValue(dx + scroll->value());
             background->setPos(dx + background->pos().x(), background->y());
             Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
@@ -302,7 +299,7 @@ void PrimerMundo::iniciarEscenaUno()
 
     vidas_ = new vidas(Vida);
     Vida--;
-    vidas_->setPos(400, nivelTierra - vidas_->boundingRect().height()-610);
+    vidas_->setPos(330, nivelTierra - vidas_->boundingRect().height()-610);
     addItem(vidas_);
 
 
@@ -321,16 +318,17 @@ void PrimerMundo::iniciarEscenaUno()
 
 
     //Agregamos ladrillos
-    int posLadrillo[38][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
+    int posLadrillo[41][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
                              , {2100,200,3}, {2300,460,4}, {2800,615,2}, {2800,575,2}, {2800,535,2},{3100,615,2}, {3100,575,2}, {3360,400,1}, {3800,615,2}
                              , {3800,575,2},{3800,535,2}, {4050,350,1}, {4250,200,1}, {4400,615,2}, {4400,575,2}, {4400,535,2}, {4400,495,2}, {4400,455,2}
-                             , {4400,415,2}, {4400,375,2}, {4920,480,6}, {5000,300,1},{5100,200,1},{5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}};
+                             , {4400,415,2}, {4400,375,2}, {4920,480,6}, {5000,300,1},{5100,200,1},{5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
+                             , {6500,410,1},{7000,410,1},{7500,410,1}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
     }
     ladrillosNota.clear();
-    for (int i = 0; i < 38; i++)
+    for (int i = 0; i < 41; i++)
     {
         ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
         ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
@@ -394,42 +392,27 @@ void PrimerMundo::iniciarEscenaUno()
       addItem(cerdo7);
       connect(this->cerdo7, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
+      //Agregamos Águilas enemigas
+        aguila=new Aguila(6000,6400);
+        aguila->setPos(6000,50);
+        addItem(aguila);
+        connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+        aguila2=new Aguila(6600,6900);
+        aguila2->setPos(6600,50);
+        addItem(aguila2);
+        connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+        aguila3=new Aguila(7200,7750);
+        aguila3->setPos(7200,50);
+        addItem(aguila3);
+        connect(this->aguila3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
 
-
-
-}
-
-
-
-void PrimerMundo::correrEscena(QTimerEvent *)
-{
-
-//    for (int i = 0;i < zanahoria.size(); i++)
-//    {
-//        zanahoria.at(i)->nextSprite();
-//    }
-
-//    for (int i = 0;i < cerdo.size(); i++)
-//    {
-//        cerdo.at(i)->nextSprite();
-//    }
-//    for (int i = 0;i < jabali.size(); i++)
-//    {
-//        jabali.at(i)->nextSprite();
-//    }
-
-//    //mueve los cerdos
-//    for (int i = 0;i < cerdo.size(); i++)
-//    {
-//        cerdo.at(i)->setX(cerdo.at(i)->pos().x() + cerdo.at(i)->getDireccion() * (-7));
-//    }
-
-//    //mueve los jabalis
-//    for (int i = 0;i < jabali.size(); i++)
-//    {
-//        jabali.at(i)->setX(jabali.at(i)->pos().x() + jabali.at(i)->getDireccion() * (-7));
-//    }
+        //Agrego bandera fin de primer nivel
+        flag=new Flag();
+        flag->setPos(7500,330);
+        addItem(flag);
 
 }
 
@@ -530,7 +513,6 @@ void PrimerMundo::Estado(int n)
     }
     else if(number == 1){
         if (Vida==0){
-            reiniciarEscenaUno();
             gameOverWindow = new GameOver();
             gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
             gameOverWindow->exec();
@@ -560,6 +542,9 @@ void PrimerMundo::reiniciarEscenaUno()
     delete cerdo5;
     delete cerdo6;
     delete cerdo7;
+    delete aguila;
+    delete aguila2;
+    delete aguila3;
     m_platform=0;
     m_jumpAnimation->stop();
     scroll->setValue(0);
@@ -593,6 +578,9 @@ PrimerMundo::~PrimerMundo()
     delete cerdo3;
     delete cerdo4;
     delete jabali1;
+    delete aguila;
+    delete aguila2;
+    delete aguila3;
     lechuga.clear();
     zanahoria.clear();
     ladrillosNota.clear();
