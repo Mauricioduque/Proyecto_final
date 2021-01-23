@@ -19,6 +19,8 @@ public:
     int type() const;
 public slots:
     void nextSprite();
+signals:
+    void estadoJuego(int);
 
 private:
     QPixmap sprite;

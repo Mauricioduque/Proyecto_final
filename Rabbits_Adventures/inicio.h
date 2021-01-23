@@ -10,6 +10,7 @@
 
 class View;
 class PrimerMundo;
+
 class AnimatedGraphicsItem : public QObject, public QGraphicsPixmapItem{
     Q_OBJECT
     Q_PROPERTY(QPointF pos READ pos WRITE setPos)

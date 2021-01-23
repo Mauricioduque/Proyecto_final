@@ -3,7 +3,6 @@
         <file>cerdo.png</file>
         <file>conejo.png</file>
         <file>conveyorR.png</file>
-        <file>jabalí.png</file>
         <file>ladrilloNota.png</file>
         <file>lechuga.png</file>
         <file>zanahoria.png</file>
@@ -18,6 +17,8 @@
         <file>agu2.png</file>
         <file>flag.png</file>
         <file>roca.png</file>
+        <file>bosqueNoche.png</file>
+        <file>jabali.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>

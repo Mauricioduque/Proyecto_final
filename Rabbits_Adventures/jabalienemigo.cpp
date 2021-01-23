@@ -4,10 +4,10 @@ JabaliEnemigo::JabaliEnemigo(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     direccion = -1;
     setFlag(ItemClipsToShape);
-    sprite = QPixmap(":/jabalí.png");
+    sprite = QPixmap(":/jabali.png");
     QTimer *timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(nextSprite()));
-    timer->start(100);
+    timer->start(50);
 }
 
 
@@ -36,7 +36,7 @@ QRectF JabaliEnemigo::boundingRect() const {
 
 void JabaliEnemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(0,0, sprite, posSprite, 0,98, 100);
+    painter->drawPixmap(0,0, sprite, posSprite, 0,100, 100);
     setTransformOriginPoint(boundingRect().center());
     Q_UNUSED(widget)
     Q_UNUSED(option)

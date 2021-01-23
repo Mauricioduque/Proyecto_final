@@ -41,7 +41,9 @@ public:
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
     void iniciarEscenaUno();
+    void iniciarEscenaDos();
     void reiniciarEscenaUno();
+
 
 private:
     void checkTimer();
@@ -55,6 +57,7 @@ private slots:
     bool manejoColisiones();
     void checkColisionMuros();
     void checkColZanahoria();
+    void checkColPina();
     void Estado(int n);
     QGraphicsItem *collidingPlatforms();
 
@@ -117,6 +120,7 @@ private:
 
     QScrollBar *scroll;
     GameOver *gameOverWindow;
+    QGraphicsView *view;
 
 
 
@@ -129,6 +133,7 @@ private:
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
     QList<Zanahoria *> eliminarZanahoria(QList<Zanahoria *>zanahoria,int pos);
+    QList<Pina *> eliminarPina(QList<Pina *>pina,int pos);
 
 };
 

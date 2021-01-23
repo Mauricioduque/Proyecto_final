@@ -109,22 +109,11 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 
 }
 
-QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, int pos)
-{
-    QList<Zanahoria *> aux;
-    for (int i=0;i<zanahoria.size() ;i++ ) {
-        if (i!=pos){
-            aux.push_back(zanahoria.at(i));
-        }
-    }
-    return aux;
-
-}
-
 void PrimerMundo::moverPersonaje()
 {
     checkColisionMuros();
     checkColZanahoria();
+    checkColPina();
 
     if(personaje->isFalling()){
         return;
@@ -411,9 +400,191 @@ void PrimerMundo::iniciarEscenaUno()
 
         //Agrego bandera fin de primer nivel
         flag=new Flag();
+        //flag->setPos(7500,330);
+        flag->setPos(400,550);
+        addItem(flag);
+        connect(this->flag, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+}
+
+void PrimerMundo::iniciarEscenaDos()
+{
+    delete personaje;
+    delete timer;
+    delete mFallTimer;
+    delete background;
+    delete ground;
+    delete danger;
+    delete Puntaje;
+    delete LogoPuntaje;
+    delete LogoVida;
+    delete cerdo1;
+    delete cerdo2;
+    delete cerdo3;
+    delete cerdo4;
+    delete cerdo5;
+    delete cerdo6;
+    delete cerdo7;
+    delete aguila;
+    delete aguila2;
+    delete aguila3;
+    m_platform=0;
+    m_jumpAnimation->stop();
+    scroll->setValue(0);
+
+    setSceneRect(0,0,8000,720);
+    nivelTierra = 660;
+
+    //Ponemos posicion incial del cielo
+    background=new Fondo(QPixmap(":/bosqueNoche.png"));
+    background->setPos(0,0);
+    addItem(background);
+
+
+    //add ground
+    ground = new Fondo(QPixmap(":/ground.png"));
+    ground->setPos(0,nivelTierra);
+    addItem(ground);
+
+    //se agrega puntaje
+    LogoPuntaje = new Fondo(QPixmap(":/scoretext.png"));
+    LogoPuntaje->setPos(870, nivelTierra -647 );
+    addItem(LogoPuntaje);
+    Puntaje = new puntaje();
+    Puntaje->setPos(980, nivelTierra - Puntaje->boundingRect().height()-610);
+    addItem(Puntaje);
+
+    //Se agrega vidas
+    LogoVida = new Fondo(QPixmap(":/vida.png"));
+    LogoVida->setPos(200, nivelTierra - 647 );
+    addItem(LogoVida);
+
+    vidas_ = new vidas(Vida);
+    Vida--;
+    vidas_->setPos(330, nivelTierra - vidas_->boundingRect().height()-610);
+    addItem(vidas_);
+
+
+    //add señal
+    danger = new Fondo(QPixmap(":/danger.png"));
+    danger->setPos(5950,360);
+    addItem(danger);
+
+    //AgregarPersonaje
+    personaje = new PPConejo();
+    personaje->setPos(50, nivelTierra - personaje->boundingRect().height() );
+    addItem(personaje);
+
+
+    startTimer( 100 );
+
+
+    //Agregamos ladrillos
+    int posLadrillo[41][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
+                             , {2100,200,3}, {2300,460,4}, {2800,615,2}, {2800,575,2}, {2800,535,2},{3100,615,2}, {3100,575,2}, {3360,400,1}, {3800,615,2}
+                             , {3800,575,2},{3800,535,2}, {4050,350,1}, {4250,200,1}, {4400,615,2}, {4400,575,2}, {4400,535,2}, {4400,495,2}, {4400,455,2}
+                             , {4400,415,2}, {4400,375,2}, {4920,480,6}, {5000,300,1},{5100,200,1},{5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
+                             , {6500,410,1},{7000,410,1},{7500,410,1}};
+    for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
+    {
+        removeItem(ladrillosNota.at(i));
+    }
+    ladrillosNota.clear();
+    for (int i = 0; i < 41; i++)
+    {
+        ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
+        ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
+        addItem(ladrillosNota.last());
+    }
+
+
+  //  Agregamos zanahorias
+    int posPina[40][2] ={{700,600},{850,600},{900,600},{950,600},{1000,600},{1050,600},{1100,600},{1150,600},{1200,600}, {900,340}
+                             ,{1100,340},{1610,460},{1660,460},{1710,460},{1760,460},{1810,460},{1860,460},{1910,460},{1960,460},{2010,460}
+                              ,{2060,460},{2100,140},{2150,140},{2200,140},{2250,140},{2350,600},{2400,600},{2450,600},{3300,600},{3400,600}
+                             ,{5110,140},{5010,240},{4950,600},{5000,600},{5050,600},{5100,600},{5150,600},{5200,600},{3300,600},{3350,600}};
+    for (int i = pina.size() - 1; 0 <= i; i--)
+    {
+        removeItem(pina.at(i));
+    }
+    pina.clear();
+
+    for (int i= 0; i < 40;i++)
+    {
+        pina.append(new Pina());
+        pina.last()->setPos(posPina[i][0], posPina[i][1]);
+        addItem(pina.last());
+
+    }
+
+
+     //Agregamos los cerdos enemigos
+      jabali1 = new JabaliEnemigo();
+      jabali1->setPos(100, nivelTierra-150);
+      addItem(jabali1);
+
+
+      cerdo2 = new CerdoEnemigo(1600,1900);
+      cerdo2->setPos(1900, nivelTierra-280);
+      addItem(cerdo2);
+      connect(this->cerdo2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      cerdo3 = new CerdoEnemigo(2100,2400);
+      cerdo3->setPos(2400, nivelTierra-150);
+      addItem(cerdo3);
+      connect(this->cerdo3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      cerdo4 = new CerdoEnemigo(3250,3500);
+      cerdo4->setPos(3500, nivelTierra-150);
+      addItem(cerdo4);
+      connect(this->cerdo4, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      cerdo5 = new CerdoEnemigo(3950,4100);
+      cerdo5->setPos(4100, nivelTierra-150);
+      addItem(cerdo5);
+      connect(this->cerdo5, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      cerdo6 = new CerdoEnemigo(4900,5300);
+      cerdo6->setPos(5300, nivelTierra-150);
+      addItem(cerdo6);
+      connect(this->cerdo6, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      cerdo7 = new CerdoEnemigo(4900,5100);
+      cerdo7->setPos(5100, nivelTierra-320);
+      addItem(cerdo7);
+      connect(this->cerdo7, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      //Agregamos Águilas enemigas
+        aguila=new Aguila(6000,6400);
+        aguila->setPos(6000,50);
+        addItem(aguila);
+        connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+        aguila2=new Aguila(6600,6900);
+        aguila2->setPos(6600,50);
+        addItem(aguila2);
+        connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+        aguila3=new Aguila(7200,7750);
+        aguila3->setPos(7200,50);
+        addItem(aguila3);
+        connect(this->aguila3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+
+        //Agrego bandera fin de primer nivel
+        flag=new Flag();
         flag->setPos(7500,330);
         addItem(flag);
 
+        timer = new QTimer(this);
+        connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
+        timer->setInterval(20);
+        mFallTimer = new QTimer(this);
+        connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
+        mFallTimer->setInterval(20);
+
+        personaje->set_m_direction(0);
+        personaje->addDirection(1);
 }
 
 qreal PrimerMundo::jumpFactor() const{
@@ -505,11 +676,47 @@ void PrimerMundo::checkColZanahoria()
     }
 }
 
+void PrimerMundo::checkColPina()
+{
+    for (int i=0;i<pina.size() ;i++ ) {
+         if(personaje->collidesWithItem(pina.at(i))){
+            removeItem(pina.at(i));
+            Puntaje->incrementar();
+            pina=eliminarPina(pina,i);
+
+         }
+    }
+}
+
+QList<Pina *> PrimerMundo::eliminarPina(QList<Pina *> pina, int pos)
+{
+    QList<Pina *> aux;
+    for (int i=0;i<pina.size() ;i++ ) {
+        if (i!=pos){
+            aux.push_back(pina.at(i));
+        }
+    }
+    return aux;
+
+}
+
+QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, int pos)
+{
+    QList<Zanahoria *> aux;
+    for (int i=0;i<zanahoria.size() ;i++ ) {
+        if (i!=pos){
+            aux.push_back(zanahoria.at(i));
+        }
+    }
+    return aux;
+
+}
+
 void PrimerMundo::Estado(int n)
 {
     int number = n;
     if(number == 0){
-        return;
+       iniciarEscenaDos();
     }
     else if(number == 1){
         if (Vida==0){
@@ -584,6 +791,5 @@ PrimerMundo::~PrimerMundo()
     lechuga.clear();
     zanahoria.clear();
     ladrillosNota.clear();
-    jabali.clear();
-    cerdo.clear();
+
 }

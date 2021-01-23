@@ -1,4 +1,5 @@
 #include "flag.h"
+#include "ppconejo.h"
 
 Flag::Flag(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
@@ -22,6 +23,18 @@ void Flag::nextSprite()
     }
     //setTransform(QTransform(-direccion, 0, 0, 1, boundingRect().width(), 0));
      setPos(this->pos().x(), this->pos().y());
+
+      QList<QGraphicsItem *> colliding_items = collidingItems();
+     //If one of the colliding items is an Enemy, destroy both the bullet and the enemy
+     for (int i = 0, n = colliding_items.size(); i < n; ++i){
+         if (typeid(*(colliding_items[i])) == typeid(PPConejo)){
+
+             emit estadoJuego(0);
+             return;
+         }
+     }
+
+
 
 }
 
