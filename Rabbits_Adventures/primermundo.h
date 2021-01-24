@@ -109,6 +109,10 @@ private:
 
     QGraphicsItem *m_platform;
     JabaliEnemigo *jabali1;
+    JabaliEnemigo *jabali2;
+    JabaliEnemigo *jabali3;
+    JabaliEnemigo *jabali4;
+    JabaliEnemigo *jabali5;
     CerdoEnemigo *cerdo1;
     CerdoEnemigo *cerdo2;
     CerdoEnemigo *cerdo3;

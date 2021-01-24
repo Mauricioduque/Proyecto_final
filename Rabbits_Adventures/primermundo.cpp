@@ -307,17 +307,17 @@ void PrimerMundo::iniciarEscenaUno()
 
 
     //Agregamos ladrillos
-    int posLadrillo[41][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
+    int posLadrillo[46][3] = {{400,500,2}, {526,400,2}, {650,300,2}, {900,400,1},{1100,400,1},{1240,300,2}, {1366,450,2}, {1600,520,8}, {1740,330,1}, {1920,330,1}
                              , {2100,200,3}, {2300,460,4}, {2800,615,2}, {2800,575,2}, {2800,535,2},{3100,615,2}, {3100,575,2}, {3360,400,1}, {3800,615,2}
                              , {3800,575,2},{3800,535,2}, {4050,350,1}, {4250,200,1}, {4400,615,2}, {4400,575,2}, {4400,535,2}, {4400,495,2}, {4400,455,2}
                              , {4400,415,2}, {4400,375,2}, {4920,480,6}, {5000,300,1},{5100,200,1},{5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
-                             , {6500,410,1},{7000,410,1},{7500,410,1}};
+                             , {6500,450,1},{7000,450,1},{7500,480,1},{7600,615,2},{7600,575,2},{7600,535,2},{7600,495,2},{7600,455,2}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
     }
     ladrillosNota.clear();
-    for (int i = 0; i < 41; i++)
+    for (int i = 0; i < 46; i++)
     {
         ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
         ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
@@ -387,21 +387,21 @@ void PrimerMundo::iniciarEscenaUno()
         addItem(aguila);
         connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-        aguila2=new Aguila(6600,6900);
-        aguila2->setPos(6600,50);
+        aguila2=new Aguila(6500,6900);
+        aguila2->setPos(6500,50);
         addItem(aguila2);
         connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-        aguila3=new Aguila(7200,7750);
-        aguila3->setPos(7200,50);
+        aguila3=new Aguila(7000,7400);
+        aguila3->setPos(7000,50);
         addItem(aguila3);
         connect(this->aguila3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
 
         //Agrego bandera fin de primer nivel
         flag=new Flag();
-        //flag->setPos(7500,330);
-        flag->setPos(400,550);
+        flag->setPos(7500,400);
+        //flag->setPos(400,550);
         addItem(flag);
         connect(this->flag, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
@@ -416,6 +416,7 @@ void PrimerMundo::iniciarEscenaDos()
     delete ground;
     delete danger;
     delete Puntaje;
+    delete flag;
     delete LogoPuntaje;
     delete LogoVida;
     delete cerdo1;
@@ -428,9 +429,12 @@ void PrimerMundo::iniciarEscenaDos()
     delete aguila;
     delete aguila2;
     delete aguila3;
+    for (int i = zanahoria.size() - 1; 0 <= i; i--) removeItem(zanahoria.at(i));
+    zanahoria.clear();
     m_platform=0;
     m_jumpAnimation->stop();
     scroll->setValue(0);
+        Vida=Vida+1;
 
     setSceneRect(0,0,8000,720);
     nivelTierra = 660;
@@ -519,20 +523,20 @@ void PrimerMundo::iniciarEscenaDos()
 
 
      //Agregamos los cerdos enemigos
-      jabali1 = new JabaliEnemigo();
-      jabali1->setPos(100, nivelTierra-150);
+      jabali1 = new JabaliEnemigo(600,900);
+      jabali1->setPos(600, nivelTierra-100);
       addItem(jabali1);
 
 
-      cerdo2 = new CerdoEnemigo(1600,1900);
-      cerdo2->setPos(1900, nivelTierra-280);
-      addItem(cerdo2);
-      connect(this->cerdo2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      jabali2 = new JabaliEnemigo(1600,1900);
+      jabali2->setPos(1600, nivelTierra-230);
+      addItem(jabali2);
+      //connect(this->cerdo2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-      cerdo3 = new CerdoEnemigo(2100,2400);
-      cerdo3->setPos(2400, nivelTierra-150);
-      addItem(cerdo3);
-      connect(this->cerdo3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      jabali3 = new JabaliEnemigo(2100,2400);
+      jabali3->setPos(2100, nivelTierra-150);
+      addItem(jabali3);
+      //connect(this->cerdo3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       cerdo4 = new CerdoEnemigo(3250,3500);
       cerdo4->setPos(3500, nivelTierra-150);
