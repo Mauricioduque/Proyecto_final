@@ -12,7 +12,7 @@ class JabaliEnemigo:  public QObject, public QGraphicsItem
     Q_OBJECT
 public:
     enum{ Type = UserType + 9};
-    JabaliEnemigo(QGraphicsItem *parent= nullptr);
+    JabaliEnemigo(int inicio,int fin,QGraphicsItem *parent= nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -25,6 +25,8 @@ private:
     QRectF Plataforma;
     int posSprite;
     int direccion;
+    int inicioPos;
+    int finPos;
 };
 
 

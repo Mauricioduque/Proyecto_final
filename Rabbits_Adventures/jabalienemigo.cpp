@@ -1,8 +1,10 @@
 #include "jabalienemigo.h"
 
-JabaliEnemigo::JabaliEnemigo(QGraphicsItem *parent) : QGraphicsItem(parent)
+JabaliEnemigo::JabaliEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     direccion = -1;
+    inicioPos=inicio;
+    finPos=fin;
     setFlag(ItemClipsToShape);
     sprite = QPixmap(":/jabali.png");
     QTimer *timer = new QTimer(this);
@@ -21,7 +23,7 @@ void JabaliEnemigo::nextSprite()
     {
         posSprite = 0;
     }
-    if(this->pos().x() < 100 || this->pos().x() >= 500) {
+    if(this->pos().x() < inicioPos|| this->pos().x() >= finPos) {
         direccion = -direccion;
         setTransform(QTransform(direccion, 0, 0, 1, 0, 0));
     }
