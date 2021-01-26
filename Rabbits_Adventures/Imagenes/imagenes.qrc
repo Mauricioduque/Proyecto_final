@@ -19,6 +19,7 @@
         <file>roca.png</file>
         <file>bosqueNoche.png</file>
         <file>jabali.png</file>
+        <file>fire.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>

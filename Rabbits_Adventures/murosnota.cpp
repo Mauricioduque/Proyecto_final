@@ -1,8 +1,9 @@
 #include "murosnota.h"
 
 MurosNota::MurosNota(int _longitud, QGraphicsItem *parent) : QGraphicsItem(parent)
-  , longitud(_longitud)
+
 {
+    longitud=_longitud;
     setFlag(ItemClipsToShape);
     sprite = QPixmap(":/tierra.png");
     posSprite = 0;

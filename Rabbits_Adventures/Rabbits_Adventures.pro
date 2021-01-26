@@ -13,6 +13,7 @@ SOURCES += \
     cerdoenemigo.cpp \
     flag.cpp \
     fondo.cpp \
+    fuego.cpp \
     gameover.cpp \
     inicio.cpp \
     jabalienemigo.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     cerdoenemigo.h \
     flag.h \
     fondo.h \
+    fuego.h \
     gameover.h \
     inicio.h \
     jabalienemigo.h \

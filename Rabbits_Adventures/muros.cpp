@@ -2,9 +2,10 @@
 
 #include <QPainter>
 
-Muros::Muros(QGraphicsItem *parent): QGraphicsItem(parent)
+Muros::Muros(int longitud,QGraphicsItem *parent): QGraphicsItem(parent)
 
 {
+    tamano=longitud;
     setFlag(ItemClipsToShape);
     sprite = QPixmap(":/conveyorR.png");
 
@@ -12,21 +13,30 @@ Muros::Muros(QGraphicsItem *parent): QGraphicsItem(parent)
 
 void Muros::nextSprite(){
 
-    posSprite += 193;
-    if (posSprite >= 1544 ) {
+    posSprite += 125;
+    if (posSprite >= 1000 ) {
         posSprite = 0;
 
     }
 }
 
 QRectF Muros::boundingRect() const {
-    return QRectF(0,0,190,56);
+    return QRectF(0,0,125*tamano,56);
 
 }
 
 void Muros::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
+
+    for(int i = 0; i < 125*tamano; i++)
+    {
+        painter->drawPixmap(i*125,0, sprite, posSprite, 0,125, 56);
+    }
+    setTransformOriginPoint(boundingRect().center());
     Q_UNUSED(widget);
     Q_UNUSED(option);
-    painter->drawPixmap(0,0, sprite, posSprite, 0,190, 56);
-    setTransformOriginPoint(boundingRect().center());
+}
+
+int Muros::type() const
+{
+    return Type;
 }
