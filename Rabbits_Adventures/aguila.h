@@ -48,7 +48,6 @@ private:
     int direccion;
     int inicioPos;
     int finPos;
-
     Roca *roca;
 
 

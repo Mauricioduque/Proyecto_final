@@ -9,7 +9,6 @@
 class vidas: public QGraphicsTextItem{
 public:
     vidas(int vid,QGraphicsItem * parent=0);
-
     void decrementar();
     int getPuntaje();
 

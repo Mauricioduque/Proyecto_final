@@ -28,6 +28,7 @@
 #include "roca.h"
 #include "flag.h"
 #include "gameover.h"
+#include "fuego.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -120,7 +121,8 @@ private:
     CerdoEnemigo *cerdo5;
     CerdoEnemigo *cerdo6;
     CerdoEnemigo *cerdo7;
-
+    Fuego *fuego;
+    Fuego *fuego1;
 
     QScrollBar *scroll;
     GameOver *gameOverWindow;
@@ -133,7 +135,7 @@ private:
     QList <Pina *> pina;
     QList <Zanahoria *> zanahoria;
     QList <MurosNota*> ladrillosNota;
-    QList <Muros*> muros;
+    QList <Muros*> muro;
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
     QList<Zanahoria *> eliminarZanahoria(QList<Zanahoria *>zanahoria,int pos);
