@@ -44,6 +44,8 @@ public:
     void iniciarEscenaUno();
     void iniciarEscenaDos();
     void reiniciarEscenaUno();
+    void reiniciarEscenaDos();
+    void Borrarmundo1();
 
 
 private:
@@ -114,6 +116,9 @@ private:
     JabaliEnemigo *jabali3;
     JabaliEnemigo *jabali4;
     JabaliEnemigo *jabali5;
+    JabaliEnemigo *jabali6;
+    JabaliEnemigo *jabali7;
+    JabaliEnemigo *jabali8;
     CerdoEnemigo *cerdo1;
     CerdoEnemigo *cerdo2;
     CerdoEnemigo *cerdo3;
@@ -123,6 +128,9 @@ private:
     CerdoEnemigo *cerdo7;
     Fuego *fuego;
     Fuego *fuego1;
+    Fuego *fuego2;
+    Fuego *fuego3;
+    Fuego *fuego4;
 
     QScrollBar *scroll;
     GameOver *gameOverWindow;

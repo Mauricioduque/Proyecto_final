@@ -409,32 +409,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 void PrimerMundo::iniciarEscenaDos()
 {
-    delete personaje;
-    delete timer;
-    delete mFallTimer;
-    delete background;
-    delete ground;
-    delete danger;
-    delete Puntaje;
-    delete flag;
-    delete LogoPuntaje;
-    delete LogoVida;
-    delete cerdo1;
-    delete cerdo2;
-    delete cerdo3;
-    delete cerdo4;
-    delete cerdo5;
-    delete cerdo6;
-    delete cerdo7;
-    delete aguila;
-    delete aguila2;
-    delete aguila3;
-    for (int i = zanahoria.size() - 1; 0 <= i; i--) removeItem(zanahoria.at(i));
-    zanahoria.clear();
-    m_platform=0;
-    m_jumpAnimation->stop();
-    scroll->setValue(0);
-        Vida=Vida+1;
+
 
     setSceneRect(0,0,8000,720);
     nivelTierra = 660;
@@ -484,30 +459,31 @@ void PrimerMundo::iniciarEscenaDos()
 
 
     //Agregamos ladrillos
-    int posLadrillo[35][3] = { {1150,615,2}, {1150,575,2},{1150,535,2},{1150,495,2}, {1150,455,2}, {2600,620,2}
-                             , {3500,615,2}, {3500,575,2}, {3500,535,2},{3500,615,2}, {3500,575,2}, {3800,400,1}, {3800,615,2}
-                             , {3800,575,2},{3800,535,2}, {4050,350,1}, {4250,200,1}, {4400,615,2}, {4400,575,2}, {4400,535,2}, {4400,495,2}, {4400,455,2}
-                             , {4400,415,2}, {4400,375,2}, {4920,480,6}, {5000,300,1},{5100,200,1},{5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
+    int posLadrillo[27][3] = { {1150,615,2}, {1150,575,2}, {1150,535,2},{1150,495,2},{1150,455,2}, {2600,620,2}
+                             , {3500,615,2}, {3500,575,2}, {3500,535,2},{3500,495,2},{3500,575,2}, {3500,535,2}
+                             , {4350,615,2}, {4350,575,2},{4350,535,2},{4350,495,2}, {4350,455,2}, {4350,415,2}
+                             , {4350,375,2}, {5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
                              , {6500,410,1},{7000,410,1},{7500,410,1}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
     }
     ladrillosNota.clear();
-    for (int i = 0; i < 35; i++)
+    for (int i = 0; i < 27; i++)
     {
         ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
         ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
         addItem(ladrillosNota.last());
     }
     //Agregamos muros 2
-    int posMuro[5][3] = {{400,500,1}, {850,500,1}, {1550,500,3}, {1680,330,1}, {2230,500,7}};
+    int posMuro[10][3] = {{400,500,1}, {850,500,1}, {1550,500,3}, {1680,330,1},{2230,500,7}
+                          ,{3750,350,1},{4050,350,1},{4750,480,1},{5000,350,1},{5250,480,1}};
     for (int i = muro.size() - 1; 0 <= i; i--)
     {
         removeItem(muro.at(i));
     }
     muro.clear();
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         muro.append(new Muros(posMuro[i][2]));
         muro.last()->setPos(posMuro[i][0],posMuro[i][1]);
@@ -515,18 +491,19 @@ void PrimerMundo::iniciarEscenaDos()
     }
 
 
-  //  Agregamos pinias
-    int posPina[40][2] ={{430,460},{480,460},{550,600},{600,600},{650,600},{700,600},{750,600},{800,600},{880,460},{930,460}
+    //  Agregamos pinias
+    int posPina[39][2] ={{430,460},{480,460},{550,600},{600,600},{650,600},{700,600},{750,600},{800,600},{880,460},{930,460}
                           ,{1200,340},{1580,460},{1630,460},{1710,460},{1760,460},{1820,460},{1870,460},{1580,600},{1630,600},{1680,600}
-                          ,{1730,600},{1780,600},{1830,600},{2300,460},{2350,460},{2400,460},{2450,460},{2450,460},{2500,460},{2550,460}
-                          ,{2600,460},{2650,460},{2700,460},{2750,460},{2800,460},{2850,460},{2900,460},{2950,460},{3000,460},{3350,600}};
+                          ,{1730,600},{1780,600},{1830,600},{2300,460},{2400,460},{2500,460},{2600,460},{3780,310},{3830,310},{4080,310}
+                          ,{4130,310},{2700,460},{2800,460},{2900,460},{3000,460},{3350,600},{4800,430},{5300,430},{5040,300}};
+
     for (int i = pina.size() - 1; 0 <= i; i--)
     {
         removeItem(pina.at(i));
     }
     pina.clear();
 
-    for (int i= 0; i < 40;i++)
+    for (int i= 0; i < 39;i++)
     {
         pina.append(new Pina());
         pina.last()->setPos(posPina[i][0], posPina[i][1]);
@@ -539,75 +516,83 @@ void PrimerMundo::iniciarEscenaDos()
       jabali1 = new JabaliEnemigo(300,700);
       jabali1->setPos(300, nivelTierra-100);
       addItem(jabali1);
+      connect(this->jabali1, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
 
       jabali2 = new JabaliEnemigo(700,1000);
       jabali2->setPos(700, nivelTierra-100);
       addItem(jabali2);
-      //connect(this->cerdo2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      connect(this->jabali2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       jabali3 = new JabaliEnemigo(1650,1800);
       jabali3->setPos(1650, nivelTierra-250);
       addItem(jabali3);
-      //connect(this->cerdo3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      connect(this->jabali3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       jabali4 = new JabaliEnemigo(1550,1950);
       jabali4->setPos(1550, nivelTierra-100);
       addItem(jabali4);
-      //connect(this->cerdo4, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      connect(this->jabali4, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-      cerdo5 = new CerdoEnemigo(3950,4100);
-      cerdo5->setPos(4100, nivelTierra-150);
-      addItem(cerdo5);
-      connect(this->cerdo5, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      jabali5 = new JabaliEnemigo(2900,3400);
+      jabali5->setPos(2900, nivelTierra-100);
+      addItem(jabali5);
+      connect(this->jabali5, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-      cerdo6 = new CerdoEnemigo(4900,5300);
-      cerdo6->setPos(5300, nivelTierra-150);
-      addItem(cerdo6);
-      connect(this->cerdo6, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      jabali6 = new JabaliEnemigo(3700,4250);
+      jabali6->setPos(3700, nivelTierra-100);
+      addItem(jabali6);
+      connect(this->jabali6, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-      cerdo7 = new CerdoEnemigo(4900,5100);
-      cerdo7->setPos(5100, nivelTierra-320);
-      addItem(cerdo7);
-      connect(this->cerdo7, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      jabali7 = new JabaliEnemigo(4600,4950);
+      jabali7->setPos(4600, nivelTierra-100);
+      addItem(jabali7);
+      connect(this->jabali7, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      jabali8 = new JabaliEnemigo(5110,5400);
+      jabali8->setPos(5110, nivelTierra-100);
+      addItem(jabali8);
+      connect(this->jabali8, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       //Agregamos Águilas enemigas
-        aguila=new Aguila(6000,6400);
-        aguila->setPos(6000,50);
-        addItem(aguila);
-        connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      aguila=new Aguila(6000,6400);
+      aguila->setPos(6000,50);
+      addItem(aguila);
+      connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-        aguila2=new Aguila(6600,6900);
-        aguila2->setPos(6600,50);
-        addItem(aguila2);
-        connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      aguila2=new Aguila(6600,6900);
+      aguila2->setPos(6600,50);
+      addItem(aguila2);
+      connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-        aguila3=new Aguila(7200,7750);
-        aguila3->setPos(7200,50);
-        addItem(aguila3);
-        connect(this->aguila3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      //Se agregan las llamas que poseen mov. circular
+      fuego = new Fuego(2700,300,2900,400,5);
+      fuego->setPos(2700,300);
+      addItem(fuego);
+      fuego1 = new Fuego(2250,300,2450,400,-5);
+      fuego1->setPos(2250,300);
+      addItem(fuego1);
+      fuego2 = new Fuego(3700,200,3960,300,-5);
+      fuego2->setPos(3700,200);
+      addItem(fuego2);
+      fuego3 = new Fuego(4900,200,5060,300,5);
+      fuego3->setPos(4900,200);
+      addItem(fuego3);
 
-        fuego = new Fuego(2700,300,2900,400,5);
-        fuego->setPos(2700,300);
-        addItem(fuego);
-        fuego1 = new Fuego(2250,300,2450,400,-5);
-        fuego1->setPos(2250,300);
-        addItem(fuego1);
+      //Agregamos zanahoria de fin de segundo nivel
+      flag=new Flag();
+      flag->setPos(7500,330);
+      addItem(flag);
 
-        //Agrego bandera fin de primer nivel
-        flag=new Flag();
-        flag->setPos(7500,330);
-        addItem(flag);
+      timer = new QTimer(this);
+      connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
+      timer->setInterval(20);
+      mFallTimer = new QTimer(this);
+      connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
+      mFallTimer->setInterval(20);
 
-        timer = new QTimer(this);
-        connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
-        timer->setInterval(20);
-        mFallTimer = new QTimer(this);
-        connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
-        mFallTimer->setInterval(20);
-
-        personaje->set_m_direction(0);
-        personaje->addDirection(1);
+      personaje->set_m_direction(0);
+      personaje->addDirection(1);
 }
 
 qreal PrimerMundo::jumpFactor() const{
@@ -743,6 +728,7 @@ void PrimerMundo::Estado(int n)
 {
     int number = n;
     if(number == 0){
+       Borrarmundo1();
        iniciarEscenaDos();
     }
     else if(number == 1){
@@ -752,7 +738,14 @@ void PrimerMundo::Estado(int n)
             gameOverWindow->exec();
         }
         else reiniciarEscenaUno();
-
+    }
+    else if(number==2){
+        if (Vida==0){
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaDos();
 
     }
     else return;
@@ -761,6 +754,7 @@ void PrimerMundo::Estado(int n)
 void PrimerMundo::reiniciarEscenaUno()
 {
     delete personaje;
+    delete flag;
     delete timer;
     delete mFallTimer;
     delete background;
@@ -798,6 +792,85 @@ void PrimerMundo::reiniciarEscenaUno()
         personaje->set_m_direction(0);
         personaje->addDirection(-1);
     }
+
+}
+
+void PrimerMundo::reiniciarEscenaDos()
+{
+    delete personaje;
+    delete flag;
+    delete timer;
+    delete mFallTimer;
+    delete background;
+    delete ground;
+    delete danger;
+    delete Puntaje;
+    delete LogoPuntaje;
+    delete LogoVida;
+    delete jabali1;
+    delete jabali2;
+    delete jabali3;
+    delete jabali4;
+    delete jabali5;
+    delete jabali6;
+    delete jabali7;
+    delete jabali8;
+    delete aguila;
+    delete aguila2;
+    delete fuego;
+    delete fuego1;
+    delete fuego2;
+    delete fuego3;
+    m_platform=0;
+    m_jumpAnimation->stop();
+    scroll->setValue(0);
+    iniciarEscenaDos();
+    timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
+    timer->setInterval(20);
+    mFallTimer = new QTimer(this);
+    connect(mFallTimer,SIGNAL(timeout()),this,SLOT(fallPersonaje()));
+    mFallTimer->setInterval(20);
+    if(reinicio){
+        personaje->set_m_direction(0);
+        personaje->addDirection(1);
+    }
+    else {
+
+        personaje->set_m_direction(0);
+        personaje->addDirection(-1);
+    }
+
+}
+
+void PrimerMundo::Borrarmundo1()
+{
+    delete personaje;
+    delete timer;
+    delete mFallTimer;
+    delete background;
+    delete ground;
+    delete danger;
+    delete Puntaje;
+    delete flag;
+    delete LogoPuntaje;
+    delete LogoVida;
+    delete cerdo1;
+    delete cerdo2;
+    delete cerdo3;
+    delete cerdo4;
+    delete cerdo5;
+    delete cerdo6;
+    delete cerdo7;
+    delete aguila;
+    delete aguila2;
+    delete aguila3;
+    for (int i = zanahoria.size() - 1; 0 <= i; i--) removeItem(zanahoria.at(i));
+    zanahoria.clear();
+    m_platform=0;
+    m_jumpAnimation->stop();
+    scroll->setValue(0);
+    Vida=Vida+1;
 
 }
 
