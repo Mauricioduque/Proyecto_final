@@ -1,13 +1,13 @@
 #include "primermundo.h"
 #include <iostream>
-PrimerMundo::PrimerMundo( QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
+PrimerMundo::PrimerMundo(bool configurar, QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
   , m_jumpAnimation(new QPropertyAnimation(this))
   , m_platform()
   , scroll(s)
 
 {
 
-
+    configurar_=configurar;
     Vida=5;
     iniciarEscenaUno();
 
@@ -298,9 +298,17 @@ void PrimerMundo::iniciarEscenaUno()
     addItem(danger);
 
     //AgregarPersonaje
-    personaje = new PPConejo();
+    personaje = new PPConejo(Jugador);
     personaje->setPos(50, nivelTierra - personaje->boundingRect().height() );
     addItem(personaje);
+
+    //Se verifica la opcion de multijugador
+    if(configurar_){
+        Jugador=true;
+
+    }
+    else Jugador=!Jugador;
+
 
 
     startTimer( 100 );
@@ -449,10 +457,16 @@ void PrimerMundo::iniciarEscenaDos()
     danger->setPos(5950,360);
     addItem(danger);
 
+
     //AgregarPersonaje
-    personaje = new PPConejo();
+    personaje = new PPConejo(Jugador);
     personaje->setPos(50, nivelTierra - personaje->boundingRect().height() );
     addItem(personaje);
+    if(configurar_){
+        Jugador=true;
+
+    }
+    else Jugador=!Jugador;
 
 
     startTimer( 100 );
@@ -728,6 +742,7 @@ void PrimerMundo::Estado(int n)
 {
     int number = n;
     if(number == 0){
+       Jugador=!Jugador;
        Borrarmundo1();
        iniciarEscenaDos();
     }
