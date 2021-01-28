@@ -22,8 +22,15 @@
 #include "zanahoria.h"
 #include "ppconejo.h"
 #include "pina.h"
+#include "puntaje.h"
+#include "vidas.h"
 #include "aguila.h"
 #include "roca.h"
+#include "flag.h"
+#include "fire.h"
+#include "new.h"
+#include "bullet.h"
+#include "gameover.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -37,7 +44,9 @@ public:
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
     void iniciarEscenaUno();
-    void correrEscena(QTimerEvent *);
+    void iniciarEscenaDos();
+    void reiniciarEscenaUno();
+
 
 private:
     void checkTimer();
@@ -50,6 +59,9 @@ private slots:
     void fallPersonaje();
     bool manejoColisiones();
     void checkColisionMuros();
+    void checkColZanahoria();
+    void checkColPina();
+    void Estado(int n);
     QGraphicsItem *collidingPlatforms();
 
 
@@ -63,12 +75,20 @@ signals:
 
 private:
     int anchoEscena=6600;
+    int direction;
+    bool reinicio=false;
+    bool quieto=false;
 
     PPConejo *personaje;
 
     Fondo *background=0;
     Fondo *ground;
     Fondo *danger;
+    Fondo *LogoPuntaje;
+    Fondo *LogoVida;
+
+    puntaje *Puntaje;
+    vidas *vidas_;
 
     qreal minX;
     qreal maxX;
@@ -76,12 +96,27 @@ private:
     qreal posicionX;
     int velocidad=7;
     int desplazamientoMundo=0;
+    int Vida=0;
 
-    QTimer timer;
-    QTimer mFallTimer;
+    QTimer *timer;
+    QTimer *mFallTimer;
     QPropertyAnimation *m_jumpAnimation;
     qreal m_jumpFactor;
     int m_jumpHeight=200;
+
+    Aguila *aguila;
+    Aguila *aguila2;
+    Aguila *aguila3;
+    Roca *roca;
+    Flag *flag;
+    Fire *fire;
+    New *fuego;
+    New *fuego1;
+    Lechuga *lechuga;
+    Fondo *cazador1;
+    Fondo *cazador2;
+    Bullet *bullet1;
+    Bullet *bullet2;
 
     QGraphicsItem *m_platform;
     JabaliEnemigo *jabali1;
@@ -93,24 +128,26 @@ private:
     CerdoEnemigo *cerdo6;
     CerdoEnemigo *cerdo7;
 
-    Aguila *aguila;
-    Aguila *aguila2;
-    Aguila *aguila3;
-    Roca *roca;
 
 
     QScrollBar *scroll;
+    GameOver *gameOverWindow;
+    QGraphicsView *view;
+
+
 
     //complementos de la escena
-    QList <Lechuga *> lechuga;
+
     QList <Pina *> pina;
     QList <Zanahoria *> zanahoria;
     QList <MurosNota*> ladrillosNota;
     QList <Muros*> muros;
     QList <JabaliEnemigo *> jabali;
     QList <CerdoEnemigo*> cerdo;
-    bool falling;
-    bool jumping;
+    QList<Zanahoria *> eliminarZanahoria(QList<Zanahoria *>zanahoria,int pos);
+    QList<Pina *> eliminarPina(QList<Pina *>pina,int pos);
+
 };
 
 #endif // PRIMERMUNDO_H
+
