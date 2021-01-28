@@ -37,7 +37,7 @@ class PrimerMundo :public QGraphicsScene
     Q_OBJECT
     Q_PROPERTY(qreal jumpFactor READ jumpFactor WRITE setJumpFactor NOTIFY jumpFactorChanged)
 public:
-    explicit PrimerMundo(QScrollBar *s,QObject *parent = nullptr);
+    explicit PrimerMundo(bool configurar,QScrollBar *s,QObject *parent = nullptr);
     ~PrimerMundo();
     qreal jumpFactor() const;
     void setJumpFactor(const qreal &jumpFactor);
@@ -78,6 +78,8 @@ private:
     int direction;
     bool reinicio=false;
     bool quieto=false;
+    bool Jugador=true;
+    bool configurar_=true;
 
     PPConejo *personaje;
 

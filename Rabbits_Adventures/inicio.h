@@ -26,7 +26,9 @@ signals:
 
 
 private slots:
-     void developerLogin();
+     void multijugadorLogin();
+     void unjugadorLogin();
+
 private:
     int selection = 0;
     const int width = 1280;
@@ -43,7 +45,8 @@ private:
     QPropertyAnimation *animation;
     QScrollBar *scroll;
     PrimerMundo *scene;
-    QPushButton *developerButton;
+    QPushButton *multijugador;
+    QPushButton *Unjugador;
     QGraphicsView *view;
 };
 #endif // INICIO_H

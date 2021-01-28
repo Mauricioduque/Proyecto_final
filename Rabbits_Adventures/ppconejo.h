@@ -10,7 +10,7 @@
 class PPConejo : public QGraphicsItem
 {
 public:
-     PPConejo(QGraphicsItem *parent = 0);
+     PPConejo(bool jugador,QGraphicsItem *parent = 0);
      ~PPConejo();
     int direction() const;
     int standingDirection() const;
@@ -43,6 +43,7 @@ private:
     int m_direction=0;
     int mCurrentFrame=0;
     int m_StandingDirection;
+    bool jugador_;
     State mState;
     QPixmap mPixmap;
     QPixmap mWalkPixmap;

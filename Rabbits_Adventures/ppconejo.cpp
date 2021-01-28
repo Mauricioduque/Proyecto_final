@@ -2,14 +2,24 @@
 #include <iostream>
 #include <QDebug>
 
-PPConejo::PPConejo(QGraphicsItem *parent) : QGraphicsItem(parent),m_StandingDirection(), mState(Standing){
+PPConejo::PPConejo(bool jugador, QGraphicsItem *parent) : QGraphicsItem(parent),m_StandingDirection(), mState(Standing){
 
+    jugador_=jugador;
     setFlag(ItemClipsToShape);
-    mWalkPixmap = QPixmap(":/conejo.png");
-    mStandingPixmap = QPixmap(":/conejo.png");
-    mJumpPixmap = QPixmap(":/conejo.png");
-    standShootPixmap = QPixmap(":/conejo.png");
-    mPixmap = mWalkPixmap;
+    if(jugador_){
+        mWalkPixmap = QPixmap(":/conejo.png");
+        mStandingPixmap = QPixmap(":/conejo.png");
+        mJumpPixmap = QPixmap(":/conejo.png");
+        standShootPixmap = QPixmap(":/conejo.png");
+        mPixmap = mWalkPixmap;
+    }
+    else{
+        mWalkPixmap = QPixmap(":/jabali.png");
+        mStandingPixmap = QPixmap(":/jabali.png");
+        mJumpPixmap = QPixmap(":/jabali.png");
+        standShootPixmap = QPixmap(":/jabali.png");
+        mPixmap = mWalkPixmap;
+    }
 }
 
 PPConejo::~PPConejo(){
