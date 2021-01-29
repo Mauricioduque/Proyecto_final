@@ -112,6 +112,7 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 void PrimerMundo::moverPersonaje()
 {
     checkColisionMuros();
+    checkColisionFuegos();
     checkColZanahoria();
     checkColPina();
 
@@ -305,7 +306,6 @@ void PrimerMundo::iniciarEscenaUno()
     //Se verifica la opcion de multijugador
     if(configurar_){
         Jugador=true;
-
     }
     else Jugador=!Jugador;
 
@@ -473,31 +473,33 @@ void PrimerMundo::iniciarEscenaDos()
 
 
     //Agregamos ladrillos
-    int posLadrillo[27][3] = { {1150,615,2}, {1150,575,2}, {1150,535,2},{1150,495,2},{1150,455,2}, {2600,620,2}
+    int posLadrillo[40][3] = { {1150,615,2}, {1150,575,2}, {1150,535,2},{1150,495,2},{1150,455,2}, {2600,620,2}
                              , {3500,615,2}, {3500,575,2}, {3500,535,2},{3500,495,2},{3500,575,2}, {3500,535,2}
-                             , {4350,615,2}, {4350,575,2},{4350,535,2},{4350,495,2}, {4350,455,2}, {4350,415,2}
+                             , {4350,615,2}, {4350,575,2}, {4350,535,2},{4350,495,2},{4350,455,2}, {4350,415,2}
                              , {4350,375,2}, {5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
-                             , {6500,410,1},{7000,410,1},{7500,410,1}};
+                             , {7500,450,1}, {7600,615,2}, {7600,575,2},{7600,535,2},{7600,495,2}, {7600,455,2}
+                             , {7600,415,2}, {7600,375,2}, {7600,335,2},{7600,295,2},{7600,255,2}, {7600,215,2}
+                             , {7600,175,2}, {7600,135,2}, {7600,95,2},{7600,55,2}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
     {
         removeItem(ladrillosNota.at(i));
     }
     ladrillosNota.clear();
-    for (int i = 0; i < 27; i++)
+    for (int i = 0; i < 40; i++)
     {
         ladrillosNota.append(new MurosNota(posLadrillo[i][2]));
         ladrillosNota.last()->setPos(posLadrillo[i][0],posLadrillo[i][1]);
         addItem(ladrillosNota.last());
     }
     //Agregamos muros 2
-    int posMuro[10][3] = {{400,500,1}, {850,500,1}, {1550,500,3}, {1680,330,1},{2230,500,7}
-                          ,{3750,350,1},{4050,350,1},{4750,480,1},{5000,350,1},{5250,480,1}};
+    int posMuro[12][3] = {{400,500,1}, {850,500,1}, {1550,500,3}, {1680,330,1},{2230,500,7}
+                          ,{3750,400,1},{4050,400,1},{4750,480,1},{5000,350,1},{5250,480,1},{6100,240,1},{7200,240,1}};
     for (int i = muro.size() - 1; 0 <= i; i--)
     {
         removeItem(muro.at(i));
     }
     muro.clear();
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 12; i++)
     {
         muro.append(new Muros(posMuro[i][2]));
         muro.last()->setPos(posMuro[i][0],posMuro[i][1]);
@@ -568,35 +570,58 @@ void PrimerMundo::iniciarEscenaDos()
       addItem(jabali8);
       connect(this->jabali8, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
-      //Agregamos Águilas enemigas
-      aguila=new Aguila(6000,6400);
-      aguila->setPos(6000,50);
-      addItem(aguila);
-      connect(this->aguila, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      //Agregamos cazadores enemigos
+      cazador1 = new Fondo(QPixmap(":/hunterleft.png"));
+      cazador1->setPos(6100,100);
+      addItem(cazador1);
+      cazador2 = new Fondo(QPixmap(":/hunterright.png"));
+      cazador2->setPos(7200,100);
+      addItem(cazador2);
 
-      aguila2=new Aguila(6600,6900);
-      aguila2->setPos(6600,50);
-      addItem(aguila2);
-      connect(this->aguila2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+      //BALAS de los  cazadores:
+      bala1=new Bullet(6210,60,-15,true);
+      bala1->setPos(6210,180);
+      addItem(bala1);
+      connect(this->bala1, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      bala2=new Bullet(7150,60,-15,false);
+      bala2->setPos(7150,180);
+      addItem(bala2);
+      connect(this->bala2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
 
       //Se agregan las llamas que poseen mov. circular
       fuego = new Fuego(2700,300,2900,400,5);
       fuego->setPos(2700,300);
       addItem(fuego);
+      connect(this->fuego, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
       fuego1 = new Fuego(2250,300,2450,400,-5);
       fuego1->setPos(2250,300);
       addItem(fuego1);
-      fuego2 = new Fuego(3700,200,3960,300,-5);
+      connect(this->fuego1, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      fuego2 = new Fuego(3700,200,3950,300,-5);
       fuego2->setPos(3700,200);
       addItem(fuego2);
+      //connect(this->fuego2, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
       fuego3 = new Fuego(4900,200,5060,300,5);
       fuego3->setPos(4900,200);
       addItem(fuego3);
+      //connect(this->fuego3, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
+
+      fuego4 = new Fuego(6480,200,6730,400,5);
+      fuego4->setPos(6650,200);
+      addItem(fuego4);
+      //connect(this->fuego4, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       //Agregamos zanahoria de fin de segundo nivel
-      flag=new Flag();
-      flag->setPos(7500,330);
-      addItem(flag);
+      zanahoriaDorada = new ZanahDorada();
+      //flag->setPos(7500,390);
+      zanahoriaDorada->setPos(400,550);
+      addItem(zanahoriaDorada);
+      connect(this->zanahoriaDorada, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
       timer = new QTimer(this);
       connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
@@ -682,12 +707,44 @@ void PrimerMundo::checkColisionMuros()
             if(w->pos().x()){
                 if(personaje->pos().x() < w->pos().x())
                     personaje->setPos(w->pos().x()- personaje->boundingRect().width(),personaje->pos().y());
-                if(personaje->pos().x() > w->pos().x()){
+                if(personaje->pos().x() > w->pos().x())
+                {
                     personaje->setPos(w->pos().x() + personaje->boundingRect().width()+63,personaje->pos().y());
                 }
             }
         }
     }
+}
+
+void PrimerMundo::checkColisionFuegos()
+{
+
+    if(personaje->collidesWithItem(fuego2)){
+        if (Vida==0){
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaDos();
+    }
+    else if(personaje->collidesWithItem(fuego3)){
+        if (Vida==0){
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaDos();
+    }
+    else if(personaje->collidesWithItem(fuego4)){
+        if (Vida==0){
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaDos();
+    }
+
+
 }
 
 void PrimerMundo::checkColZanahoria()
@@ -742,7 +799,11 @@ void PrimerMundo::Estado(int n)
 {
     int number = n;
     if(number == 0){
-       Jugador=!Jugador;
+        if(configurar_){
+            Jugador=true;
+
+        }
+        else Jugador=!Jugador;
        Borrarmundo1();
        iniciarEscenaDos();
     }
@@ -762,6 +823,20 @@ void PrimerMundo::Estado(int n)
         }
         else reiniciarEscenaDos();
 
+    }
+    else if(number==3){
+        if (Vida==0){
+            gameOverWindow = new GameOver();
+            gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+            gameOverWindow->exec();
+        }
+        else reiniciarEscenaDos();
+
+    }
+    else if(number == 4){
+        ganar = new Triunfo();
+        ganar->setWindowFlags(((ganar->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+        ganar->exec();
     }
     else return;
 }
@@ -813,8 +888,8 @@ void PrimerMundo::reiniciarEscenaUno()
 void PrimerMundo::reiniciarEscenaDos()
 {
     delete personaje;
-    delete flag;
     delete timer;
+    delete zanahoriaDorada;
     delete mFallTimer;
     delete background;
     delete ground;
@@ -830,8 +905,10 @@ void PrimerMundo::reiniciarEscenaDos()
     delete jabali6;
     delete jabali7;
     delete jabali8;
-    delete aguila;
-    delete aguila2;
+    delete cazador1;
+    delete cazador2;
+    delete bala1;
+    delete bala2;
     delete fuego;
     delete fuego1;
     delete fuego2;

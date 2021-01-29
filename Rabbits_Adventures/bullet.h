@@ -1,5 +1,5 @@
-#ifndef FUEGO_H
-#define FUEGO_H
+#ifndef BULLET_H
+#define BULLET_H
 
 
 #include <QGraphicsItem>
@@ -10,22 +10,28 @@
 
 
 
-class Fuego:  public QObject, public QGraphicsItem
+class Bullet:  public QObject, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    enum{ Type = UserType + 1};
-    Fuego(float  x, float  y,float centrox,float centroy,float vel,QGraphicsItem *parent= nullptr);
+    enum{ Type = UserType + 8};
+    Bullet(float x,float Velx,float ang,bool f,QGraphicsItem *parent= nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int type() const;
 
     // variables y constantes para ecuación de mov circular:
-    float  posy,posx;
-    float  cx,cy;
+    float  posy=180,posx;
+    float  vx,v=0;
     float  w; //velocidad angular de la particula(rad/s);
     float  T=0.05;//periodo
+    float g=10;
+    float pi=3.1416;
+    bool flag;
+
+    float a,b,c;
+    bool d;
 
 public slots:
     void move();
@@ -41,5 +47,4 @@ private:
     int inicioPos;
     int finPos;
 };
-
-#endif // FUEGO_H
+#endif // BULLET_H

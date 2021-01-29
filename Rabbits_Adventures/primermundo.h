@@ -29,6 +29,9 @@
 #include "flag.h"
 #include "gameover.h"
 #include "fuego.h"
+#include "bullet.h"
+#include "zanahdorada.h"
+#include "triunfo.h"
 
 
 class PrimerMundo :public QGraphicsScene
@@ -59,6 +62,7 @@ private slots:
     void fallPersonaje();
     bool manejoColisiones();
     void checkColisionMuros();
+    void checkColisionFuegos();
     void checkColZanahoria();
     void checkColPina();
     void Estado(int n);
@@ -88,6 +92,10 @@ private:
     Fondo *danger;
     Fondo *LogoPuntaje;
     Fondo *LogoVida;
+    Fondo *cazador1;
+    Fondo *cazador2;
+    Bullet *bala1;
+    Bullet *bala2;
 
     puntaje *Puntaje;
     vidas *vidas_;
@@ -111,6 +119,7 @@ private:
     Aguila *aguila3;
     Roca *roca;
     Flag *flag;
+    ZanahDorada *zanahoriaDorada;
 
     QGraphicsItem *m_platform;
     JabaliEnemigo *jabali1;
@@ -136,6 +145,7 @@ private:
 
     QScrollBar *scroll;
     GameOver *gameOverWindow;
+    Triunfo *ganar;
     QGraphicsView *view;
 
 

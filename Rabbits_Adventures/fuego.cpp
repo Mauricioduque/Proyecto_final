@@ -1,5 +1,5 @@
 #include "fuego.h"
-
+#include "ppconejo.h"
 #include <math.h>
 
 Fuego::Fuego(float x,float  y,float centrox,float centroy,float vel, QGraphicsItem *parent) : QGraphicsItem(parent)
@@ -21,7 +21,7 @@ Fuego::Fuego(float x,float  y,float centrox,float centroy,float vel, QGraphicsIt
 void Fuego::move()
 {
 
-    //float t=5*T;
+    float t=0.5*0.05;
 
 //    ECUACIONES DE MOV CIRCULAR UNIFORME:
 //    X(n)=(X(n-1)-Cx)*cos(wT)-(Y(n-1)-cy)*sen(wT)+cx
@@ -29,23 +29,23 @@ void Fuego::move()
     float aux,auxy;
     aux=posx-cx;
     auxy=posy-cy;
-    posx=(aux)*cos(w*T)-(auxy)*sin(w*T)+cx;
-    posy=(auxy)*cos(w*T)+(aux)*sin(w*T)+cy;
+    posx=(aux)*cos(w*t)-(auxy)*sin(w*t)+cx;
+    posy=(auxy)*cos(w*t)+(aux)*sin(w*t)+cy;
    // posx=posx+100;
 
     setPos(int(posx),int(posy));
 
 
-//    Verificación de colisión del conejo con el fuego
-//    QList<QGraphicsItem *> colliding_items = collidingItems();
-//    for(int i=0; i < colliding_items.size(); ++i){
-//        if(typeid (*(colliding_items[i]))== typeid (PPConejo)){
+    //Verificación de colisión del conejo con el fuego
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+    for(int i=0; i < colliding_items.size(); ++i){
+        if(typeid (*(colliding_items[i]))== typeid (PPConejo)){
 
-//            col=true;
+            emit estadoJuego(3);
 
-//            return;
-//        }
-//    }
+            return;
+        }
+    }
 
 }
 

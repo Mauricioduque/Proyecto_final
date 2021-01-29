@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     aguila.cpp \
+    bullet.cpp \
     cerdoenemigo.cpp \
     flag.cpp \
     fondo.cpp \
@@ -27,12 +28,15 @@ SOURCES += \
     primermundo.cpp \
     puntaje.cpp \
     roca.cpp \
+    triunfo.cpp \
     vidas.cpp \
     view.cpp \
+    zanahdorada.cpp \
     zanahoria.cpp
 
 HEADERS += \
     aguila.h \
+    bullet.h \
     cerdoenemigo.h \
     flag.h \
     fondo.h \
@@ -49,12 +53,15 @@ HEADERS += \
     primermundo.h \
     puntaje.h \
     roca.h \
+    triunfo.h \
     vidas.h \
     view.h \
+    zanahdorada.h \
     zanahoria.h
 
 FORMS += \
-    gameover.ui
+    gameover.ui \
+    triunfo.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -20,6 +20,10 @@
         <file>bosqueNoche.png</file>
         <file>jabali.png</file>
         <file>fire.png</file>
+        <file>bullet (1).png</file>
+        <file>hunterleft.png</file>
+        <file>hunterright.png</file>
+        <file>zanahoriad.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>

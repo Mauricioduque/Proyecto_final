@@ -33,12 +33,7 @@ void Flag::nextSprite()
              return;
          }
      }
-
-
-
 }
-
-
 
 QRectF Flag::boundingRect() const {
 
