@@ -14,10 +14,10 @@ PPConejo::PPConejo(bool jugador, QGraphicsItem *parent) : QGraphicsItem(parent),
         mPixmap = mWalkPixmap;
     }
     else{
-        mWalkPixmap = QPixmap(":/jabali.png");
-        mStandingPixmap = QPixmap(":/jabali.png");
-        mJumpPixmap = QPixmap(":/jabali.png");
-        standShootPixmap = QPixmap(":/jabali.png");
+        mWalkPixmap = QPixmap(":/personaje2.png");
+        mStandingPixmap = QPixmap(":/personaje2.png");
+        mJumpPixmap = QPixmap(":/personaje2.png");
+        standShootPixmap = QPixmap(":/personaje2.png");
         mPixmap = mWalkPixmap;
     }
 }

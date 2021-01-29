@@ -10,7 +10,8 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent){
     scroll = new QScrollBar;
     scroll = viewer->horizontalScrollBar();
 
-
+    foreground = new QGraphicsPixmapItem(QPixmap(":/fodoinicio.png"));
+    addItem(foreground);
     this->setFocus();
     this->setSceneRect(0,0,1280,720);
     view->sceneSet(this);
