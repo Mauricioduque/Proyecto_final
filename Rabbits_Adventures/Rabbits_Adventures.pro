@@ -19,6 +19,7 @@ SOURCES += \
     inicio.cpp \
     jabalienemigo.cpp \
     lechuga.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp \
     muros.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     inicio.h \
     jabalienemigo.h \
     lechuga.h \
+    login.h \
     mainwindow.h \
     muros.h \
     murosnota.h \
@@ -61,6 +63,7 @@ HEADERS += \
 
 FORMS += \
     gameover.ui \
+    login.ui \
     triunfo.ui
 
 # Default rules for deployment.

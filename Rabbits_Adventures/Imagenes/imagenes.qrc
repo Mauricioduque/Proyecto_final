@@ -24,6 +24,10 @@
         <file>hunterleft.png</file>
         <file>hunterright.png</file>
         <file>zanahoriad.png</file>
+        <file>personaje2.png</file>
+        <file>fodoinicio.png</file>
+        <file>ganar.png</file>
+        <file>gameover.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>

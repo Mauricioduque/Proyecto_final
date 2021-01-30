@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QProcess>
 
+
 namespace Ui {
 class GameOver;
 }
