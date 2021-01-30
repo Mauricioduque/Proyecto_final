@@ -28,6 +28,7 @@
         <file>fodoinicio.png</file>
         <file>ganar.png</file>
         <file>gameover.png</file>
+        <file>ass.png</file>
     </qresource>
     <qresource prefix="/font"/>
 </RCC>

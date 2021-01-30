@@ -41,7 +41,7 @@ private:
     const int width = 1280;
     const int height = 720;
     bool usuario=false;
-    string dato,database;
+    string database;
     AnimatedGraphicsItem *background;
     View *viewer;
     QGraphicsPixmapItem *foreground;

@@ -1,11 +1,26 @@
-#include "bullet.h"
+/*
+ Proyecto: Rabbit's Adventures
 
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase bullet: objeto disparado por el cazador enemigo del segundo mundo, encargado de
+ salir disparado en una trayectoria parabólica, por medio del método move() asociado a un timer
+
+ */
+
+#include "bullet.h"
 #include "ppconejo.h"
 #include <math.h>
 
+//constructor que recibe  Vx y angulo en Y para calcular la velocidad y cargar el sprite
 Bullet::Bullet(float x,float Velx, float ang,bool f,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
-         //recibo Vx y angulo y con eso calculo v
+     //recibo
      posx=x;
      vx=Velx;
      w=ang*(pi/180); //grados a rad
@@ -15,8 +30,6 @@ Bullet::Bullet(float x,float Velx, float ang,bool f,QGraphicsItem *parent) : QGr
      c=v;
      if(f)direccion=1;
      else direccion=-1;
-
-
     setFlag(ItemClipsToShape);
     sprite = QPixmap(":/bullet (1).png");
     posSprite=0;
@@ -24,6 +37,10 @@ Bullet::Bullet(float x,float Velx, float ang,bool f,QGraphicsItem *parent) : QGr
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
     timer->start(int(1000*T));
 }
+
+
+//SLOT que varia la posición de la bala a partir de las ecuaciones de movimiento parabolico
+//y se verifica si hay colision con el conejo
 void Bullet::move(){
  // posy=y();
 
@@ -61,11 +78,13 @@ void Bullet::move(){
 
 }
 
+//Margen del sprite
 QRectF Bullet::boundingRect() const {
 
     return QRectF(0,0,55,25);
 }
 
+//Dibuja el sprite
 void Bullet::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,55, 25);

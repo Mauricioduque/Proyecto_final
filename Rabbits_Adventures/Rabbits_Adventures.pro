@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    about.cpp \
     aguila.cpp \
     bullet.cpp \
     cerdoenemigo.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
     fuego.cpp \
     gameover.cpp \
     inicio.cpp \
+    instructions.cpp \
     jabalienemigo.cpp \
     lechuga.cpp \
     login.cpp \
@@ -36,6 +38,7 @@ SOURCES += \
     zanahoria.cpp
 
 HEADERS += \
+    about.h \
     aguila.h \
     bullet.h \
     cerdoenemigo.h \
@@ -44,6 +47,7 @@ HEADERS += \
     fuego.h \
     gameover.h \
     inicio.h \
+    instructions.h \
     jabalienemigo.h \
     lechuga.h \
     login.h \
@@ -62,7 +66,9 @@ HEADERS += \
     zanahoria.h
 
 FORMS += \
+    about.ui \
     gameover.ui \
+    instructions.ui \
     login.ui \
     triunfo.ui
 
