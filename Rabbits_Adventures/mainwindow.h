@@ -39,6 +39,7 @@ class MainWindow : public QMainWindow{
 public:
     MainWindow();
     void setSize();
+    void createScene();
 
 signals:
     void playSound(QString);
@@ -48,7 +49,7 @@ public slots:
 
 private:
     void createActions();
-    void createScene();
+
     enum { maxState = 10 };
     Inicio *title;
     View *view;

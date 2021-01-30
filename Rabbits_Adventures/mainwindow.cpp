@@ -2,10 +2,6 @@
 #include <iostream>
 
 
-#include "mainwindow.h"
-#include <iostream>
-
-
 MainWindow::MainWindow(){
 
     createScene();
