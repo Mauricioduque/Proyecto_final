@@ -1,7 +1,23 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Fuego: obstáculo  del segundo mundo, con movimiento circular
+ (asociado a un timer)
+
+ */
+
 #include "fuego.h"
 #include "ppconejo.h"
 #include <math.h>
 
+//Costructor donde se carga la imagen y se inicia el timer asociado
 Fuego::Fuego(float x,float  y,float centrox,float centroy,float vel, QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     posx=x;
@@ -18,6 +34,9 @@ Fuego::Fuego(float x,float  y,float centrox,float centroy,float vel, QGraphicsIt
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
     timer->start(int(1000*T));
 }
+
+//SLOT que varia la posición del fuego a partir de las ecuaciones de movimiento circular
+//y se verifica si hay colision con el conejo
 void Fuego::move()
 {
 
@@ -49,11 +68,13 @@ void Fuego::move()
 
 }
 
+//Margen de la imagen
 QRectF Fuego::boundingRect() const {
 
     return QRectF(0,0,122,150);
 }
 
+//Se dibuja el sprote asociado
 void Fuego::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,122, 150);

@@ -1,6 +1,22 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Aguila: enemigo final  del primer mundo, encargado de lanzar piedras
+ en caida libre a medida que vuela (cambiando su sprite, asociado a un timer)
+
+ */
+
 #include "aguila.h"
 #include "roca.h"
 
+//Costructor donde se carga la imagen y se inicia el timer asociado
 Aguila::Aguila(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     inicioPos=inicio;
@@ -14,6 +30,7 @@ Aguila::Aguila(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 
 }
 
+//Variación del sprite que esta asociada al timer(SLOT)
 void Aguila::nextSprite()
 {
 
@@ -50,19 +67,12 @@ void Aguila::nextSprite()
             emit estadoJuego(1);
             roca->colis=false;
         }
-
-
     }
-
-
-
-
 }
 
-
-void Aguila::tirar_roca(){
-//Agregamos roca
-
+//Se agrega la roca a la escena
+void Aguila::tirar_roca()
+{
 
       if(direccion==-1){
          roca= new Roca(pos().x()+ (direccion*7)+200);
@@ -76,14 +86,15 @@ void Aguila::tirar_roca(){
 
       scene()->addItem(roca);
 
-
-
 }
+
+//Margen del objeto
 QRectF Aguila::boundingRect() const {
 
     return QRectF(0,0,122,150);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite
 void Aguila::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,122, 150);

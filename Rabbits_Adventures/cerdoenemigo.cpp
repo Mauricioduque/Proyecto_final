@@ -1,6 +1,22 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Cerdo Enemigo: objeto del primer mundo, que se desplaza en determina seccion
+ y se encuentra asociado a un timer, si el conejo colsona con este puede perder una de sus vidas
+
+ */
+
 #include "cerdoenemigo.h"
 #include "ppconejo.h"
 
+//Costructor donde se carga la imagen y se inicia el timer asociado
 CerdoEnemigo::CerdoEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     inicioPos=inicio;
@@ -13,6 +29,7 @@ CerdoEnemigo::CerdoEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphics
     timer->start(100);
 }
 
+//Variación del sprite que esta asociada al timer(SLOT) y verifica la colisión
 void CerdoEnemigo::nextSprite()
 {
     //Manejo de Sprites
@@ -41,13 +58,13 @@ void CerdoEnemigo::nextSprite()
     }
 }
 
-
-
+//Margen de la imagen
 QRectF CerdoEnemigo::boundingRect() const {
 
     return QRectF(0,0,122,150);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite
 void CerdoEnemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,122, 150);

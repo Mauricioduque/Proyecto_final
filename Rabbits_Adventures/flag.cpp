@@ -1,6 +1,20 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Flag: objeto del primer mundo, que al colisionar con el conejo le da al paso al mundo 2
+
+ */
 #include "flag.h"
 #include "ppconejo.h"
 
+//Costructor donde se carga la imagen y se inicia el timer asociado
 Flag::Flag(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
 
@@ -11,6 +25,7 @@ Flag::Flag(QGraphicsItem *parent) : QGraphicsItem(parent)
     timer3->start(100);
 }
 
+//Variación del sprite que esta asociada al timer(SLOT) y verifica la colisión
 void Flag::nextSprite()
 {
     //Manejo de Sprites
@@ -35,11 +50,13 @@ void Flag::nextSprite()
      }
 }
 
+//Margen de la imagen
 QRectF Flag::boundingRect() const {
 
     return QRectF(0,0,85,81);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite
 void Flag::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,85, 81);

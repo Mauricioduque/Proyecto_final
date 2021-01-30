@@ -29,7 +29,9 @@
 #include <QStatusBar>
 #include <QStyle>
 #include "inicio.h"
+#include "about.h"
 #include "view.h"
+#include "instructions.h"
 
 class Inicio;
 class View;
@@ -41,29 +43,26 @@ public:
     void setSize();
     void createScene();
 
-signals:
-    void playSound(QString);
-
 
 public slots:
+    void showAbout();
+    void showinstruction();
 
 private:
     void createActions();
+    void createMenus();
 
     enum { maxState = 10 };
     Inicio *title;
     View *view;
     QRect screenGeometry = QApplication::desktop()->screenGeometry();
-    QAction *returnAction;
-    QAction *emptyAction;
-    QAction *saveStateAction[maxState];
-    QAction *loadStateAction[maxState];
-    QAction *quitAction;
-    QAction *fullScreenAction;
-    QAction *settingsAction;
+    QMenu *helpMenu;
+    QMenu *instruction;
+
     QAction *aboutAction;
-    QAction *weatherStationAction;
-    QRegularExpression *myRegEx;
+    QAction *InstructionAction;
+    about *aboutt;
+    instructions *Instruction;
 
 };
 #endif // MAINWINDOW_H

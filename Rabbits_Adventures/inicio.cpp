@@ -87,6 +87,7 @@ string Inicio::lectura_txt(string name)
 
 bool Inicio::checkUser()
 {
+    string dato;
     QString nombre=labelusuario->text();
     QString contrasena=labelcontrasena->text();
     string stringNombre = nombre.toLocal8Bit().constData();
@@ -97,8 +98,13 @@ bool Inicio::checkUser()
     dato.push_back('\n');
     database=lectura_txt("registro1.txt");
     size_t found=database.find(dato);
-    if(found!=string::npos) return true;
-    else return false;
+    if(found!=string::npos){
+
+        return true;
+    }
+    else {
+        return false;
+    }
 
 
 }
@@ -109,6 +115,10 @@ void Inicio::multijugadorLogin()
      multijugador->close();
      Unjugador->close();
      newUserButton->close();
+     labelusuario->close();
+     labelcontrasena->close();
+     password->close();
+     userName->close();
      scene = new PrimerMundo(false,scroll,this);
      viewer->sceneSet(scene);
 
@@ -121,12 +131,16 @@ void Inicio::unjugadorLogin()
         Unjugador->close();
         multijugador->close();
         newUserButton->close();
+        labelusuario->close();
+        labelcontrasena->close();
+        password->close();
+        userName->close();
         scene = new PrimerMundo(true,scroll,this);
         viewer->sceneSet(scene);
     }
     else {
         QMessageBox msgBoxFail;
-        msgBoxFail.setText("That is not a valid email address.   ");
+        msgBoxFail.setText("That is not a valid user.   ");
         msgBoxFail.setWindowTitle("Warning");
         msgBoxFail.exec();
         return;
