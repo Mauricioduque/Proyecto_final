@@ -28,7 +28,6 @@ private slots:
 private:
     Ui::Login *ui;
     QString nombre,contrasena;
-    string dato;
 };
 
 #endif // LOGIN_H

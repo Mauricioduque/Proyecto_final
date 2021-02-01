@@ -1,8 +1,25 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase inicio: ventana que despliega la pantalla de inicio,
+ donde se adminsitra el registro e ingreso de usuarios y el modo en que se
+ desee jugar
+
+ */
+
+
 #include "inicio.h"
-
 #include <QMessageBox>
-#include <Qstring>
 
+//se genera la ventana inicial y los botones de cargar partida, mltijugador o nuevo usuario
+//y los text edit de usuario y contrasena
 Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
 {
     viewer = view;
@@ -17,27 +34,27 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
     view->sceneSet(this);
 
 
-    //Push Button for developer login
+    //Push Button para jugar individual
     Unjugador = new QPushButton(viewer);
-    Unjugador->setText("New Game");
-    Unjugador->setObjectName(QString("New Game"));
+    Unjugador->setText("Load Game");
+    Unjugador->setObjectName(QString("Load Game"));
     Unjugador->setToolTip("Login as a guest");
-    Unjugador->setGeometry(QRect(400, 535, 100, 32));
+    Unjugador->setGeometry(QRect(440, 400, 100, 32));
     connect(Unjugador, SIGNAL(clicked()), this, SLOT(unjugadorLogin()));
 
-    //Push Button for developer login
+    //Push Button para multijugador
     multijugador = new QPushButton(viewer);
     multijugador->setText("Multiplayer");
     multijugador->setObjectName(QString("Multiplayer"));
     multijugador->setToolTip("Login as a guest");
-    multijugador->setGeometry(QRect(540, 535, 100, 32));
+    multijugador->setGeometry(QRect(550, 400, 100, 32));
     connect(multijugador, SIGNAL(clicked()), this, SLOT(multijugadorLogin()));
 
     newUserButton = new QPushButton(viewer);
     newUserButton->setText("New User");
     newUserButton->setObjectName(QString("newUserButton"));
     newUserButton->setToolTip("Click to create a login");
-    newUserButton->setGeometry(QRect(642, 500, 100, 32));
+    newUserButton->setGeometry(QRect(660, 400, 100, 32));
     connect(newUserButton, SIGNAL(clicked()), this, SLOT(newUser()));
 
     labelusuario = new QLineEdit(viewer);
@@ -45,7 +62,7 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
     labelusuario->setToolTip("Enter you username");
     labelusuario->setGeometry(QRect(540, 320, 200, 25));
 
-    //Add Label for username
+    //Se agrega label para username
     QFont font("MV Boli", 15, QFont::Bold);
     userName = new QLabel(viewer);
     userName->setFont(font);
@@ -53,14 +70,14 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
     userName->setObjectName(QString("username"));
     userName->setGeometry(QRect(430, 320, 100, 25));
 
-    //Add line edit for password, set tooltip
+    //Se agrega  line edit para  password, con opción de ocultarlo
     labelcontrasena = new QLineEdit(viewer);
     labelcontrasena->setEchoMode(QLineEdit::Password);
     labelcontrasena->setObjectName(QString("passLine"));
     labelcontrasena->setToolTip("Enter password");
     labelcontrasena->setGeometry(QRect(540, 350, 200, 25));
 
-    //Add Label For password
+    //Se agrega label para password
     password = new QLabel(viewer);
     password->setFont(font);
     password->setText("Password");
@@ -69,6 +86,7 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
 
 }
 
+//se carga en un string la base de datos
 string Inicio::lectura_txt(string name)
 {
     long long int tam;
@@ -85,6 +103,7 @@ string Inicio::lectura_txt(string name)
     return data;
 }
 
+//se verifica si el registro del usuario es correcto
 bool Inicio::checkUser()
 {
     string dato;
@@ -109,7 +128,7 @@ bool Inicio::checkUser()
 
 }
 
-
+//inicia en modo multijugador
 void Inicio::multijugadorLogin()
 {
      multijugador->close();
@@ -124,6 +143,7 @@ void Inicio::multijugadorLogin()
 
 }
 
+//inicia en modo un jugador si se realiza de manera correcta el ingreso de usuario
 void Inicio::unjugadorLogin()
 {
     usuario=checkUser();
@@ -148,6 +168,7 @@ void Inicio::unjugadorLogin()
 
 }
 
+//despleja la ventana de registro de nuevo usuario
 void Inicio::newUser(){
 
     loginWindow = new Login();

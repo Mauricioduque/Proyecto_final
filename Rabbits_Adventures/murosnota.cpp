@@ -1,5 +1,21 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase murosNota: objetos del primer y segundo mundo, sobre los cuales
+ puede moverse el conejo o a su vez generarle una barrera.
+
+ */
+
 #include "murosnota.h"
 
+//Se carga la imagen y la cantidad de muros que se deseen poner en fila
 MurosNota::MurosNota(int _longitud, QGraphicsItem *parent) : QGraphicsItem(parent)
 
 {
@@ -9,28 +25,13 @@ MurosNota::MurosNota(int _longitud, QGraphicsItem *parent) : QGraphicsItem(paren
     posSprite = 0;
 }
 
-MurosNota::~MurosNota()
-{
-
-}
-
-void MurosNota::nextSprite()
-{
-    //Manejo de Sprites
-    //Distancia en caada sprite
-    posSprite += 65;
-    //Condicion volver al primer sprite, si sobre pasa la dimension la imagen plana
-    if(posSprite >= 518)
-    {
-        posSprite = 0;
-    }
-}
-
+//Se define la margen del objeto a partir del tamaño
 QRectF MurosNota::boundingRect() const
 {
     return QRectF(0,0,63*longitud,63);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite y de su tamaño
 void MurosNota::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     for(int i = 0; i < 63*longitud; i++)

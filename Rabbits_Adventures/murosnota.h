@@ -11,9 +11,6 @@ class MurosNota : public QGraphicsItem
 public:
     enum{ Type = UserType + 11};
     MurosNota(int _longitud, QGraphicsItem *parent = nullptr);
-    ~MurosNota();
-
-    void nextSprite();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int type() const;

@@ -1,6 +1,22 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Jabali Enemigo: objeto del segundo mundo, que se desplaza en determina seccion
+ y se encuentra asociado a un timer, si el conejo colisiona con este puede perder una de sus vidas
+
+ */
+
 #include "jabalienemigo.h"
 #include "ppconejo.h"
 
+//se carga la imagen y se inicia el timer asociado
 JabaliEnemigo::JabaliEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     direccion = -1;
@@ -13,7 +29,7 @@ JabaliEnemigo::JabaliEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphi
     timer->start(50);
 }
 
-
+//Variación del sprite que esta asociada al timer(SLOT) y verifica la colisión
 void JabaliEnemigo::nextSprite()
 {
     //Manejo de Sprites
@@ -41,12 +57,13 @@ void JabaliEnemigo::nextSprite()
     }
 }
 
-
+//se crea la margen del objeto
 QRectF JabaliEnemigo::boundingRect() const {
 
     return QRectF(0,0,98,100);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite
 void JabaliEnemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,100, 100);

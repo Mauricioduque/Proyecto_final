@@ -9,7 +9,6 @@ class Muros : public QGraphicsItem
 public:
     enum{ Type = UserType + 13};
     Muros(int longitud,QGraphicsItem *parent = 0);
-    void nextSprite();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int type() const;

@@ -34,7 +34,6 @@ public:
 private:
     enum State {
          Standing = 0,
-         StandShoot,
          Walking,
          Jumping,
          Falling

@@ -13,7 +13,6 @@ class Pina : public QGraphicsItem
 public:
     enum { Type = UserType + 5 };
     Pina(QGraphicsItem *parent = 0);
-    ~Pina();
     void nextSprite();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

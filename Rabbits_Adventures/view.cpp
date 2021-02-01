@@ -1,3 +1,17 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase View: permite apaganr las barras del scroll y mostrar al inicio ,
+ la escena en pantalla.
+ */
+
 #include "view.h"
 
 View::View() {

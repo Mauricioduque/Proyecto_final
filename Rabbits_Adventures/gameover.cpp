@@ -8,7 +8,7 @@
  Departamento de Electrónica y Telecomunicaciones
  Universidad de Antioquia
 
- Clase Game over: ventana ue despliega el mensaje de que ha perdido
+ Clase Game over: ventana que despliega el mensaje de que ha perdido
  y presenta la opción de reiniciar el juego o cerrarlo
 
  */

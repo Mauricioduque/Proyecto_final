@@ -1,8 +1,24 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase login: ventana que permite registrar un nuevo usuario, donde despues de ingresado
+ el nombre y contraseña se adecuan los datos ("nombre","contraseña)
+ y se escriben en un archivo .txt, llamado registro1.txt que será la base de datos del juego
+
+ */
+
+
 #include "login.h"
 #include "ui_login.h"
 #include <QDebug>
 
-string archivo;
 
 Login::Login(QWidget *parent) :
     QDialog(parent),
@@ -18,13 +34,7 @@ Login::~Login()
 
 void Login::escribir_txt(string name, string data)
 {
-        /* k: objeto que pertenece a la clase fstream,
-         * donde estan definidas todas las funciones,
-         * que permite comunicarnos con los archivos de texto.
-         * se crea o se abre el archivo ensayo en modo escritura (fstream::out)
-         *  o de manera binaria (fstream::binary)
-        */
-        fstream k(name,fstream::out | fstream::binary);
+        fstream k(name,fstream::app);
         k << data; // se escribe sobre archivo ensayo
         //k.write(data.c_str(),data.length());
         k.close();//cerrar archivo
@@ -32,6 +42,7 @@ void Login::escribir_txt(string name, string data)
 
 void Login::on_Registrar_clicked()
 {
+    string dato;
     nombre=ui->USERNAME->text();
     contrasena= ui->PASSWORD->text();
     std::string stringNombre = nombre.toLocal8Bit().constData();
@@ -40,7 +51,6 @@ void Login::on_Registrar_clicked()
     dato.push_back(',');
     dato.append(stringContrasena);
     dato.push_back('\n');
-    archivo.append(dato);
-    escribir_txt("registro1.txt",archivo);
+    escribir_txt("registro1.txt",dato);
     close();
 }

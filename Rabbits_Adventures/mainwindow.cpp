@@ -1,17 +1,30 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Mainwindow: ventana principal desde donde se adminsitra el inicio del juego,
+ una vez ejecutado, permite desplegar los menus de about e instructions.
+
+ */
+
+
 #include "mainwindow.h"
 #include <iostream>
 
 
 MainWindow::MainWindow()
 {
-
     createActions();
     createMenus();
     createScene();
     setCentralWidget(view);
     setWindowTitle("Rabbits Adventures");
-
-
 }
 
 
@@ -42,6 +55,7 @@ void MainWindow::showAbout()
     aboutt = new about;
     aboutt->exec();
 }
+
 void MainWindow::createMenus()
 {
 

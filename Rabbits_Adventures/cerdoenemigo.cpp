@@ -9,14 +9,14 @@
  Universidad de Antioquia
 
  Clase Cerdo Enemigo: objeto del primer mundo, que se desplaza en determina seccion
- y se encuentra asociado a un timer, si el conejo colsona con este puede perder una de sus vidas
+ y se encuentra asociado a un timer, si el conejo colisiona con este puede perder una de sus vidas
 
  */
 
 #include "cerdoenemigo.h"
 #include "ppconejo.h"
 
-//Costructor donde se carga la imagen y se inicia el timer asociado
+// se carga la imagen y se inicia el timer asociado
 CerdoEnemigo::CerdoEnemigo(int inicio,int fin,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     inicioPos=inicio;
