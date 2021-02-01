@@ -1,3 +1,20 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase roca: clase asociada al enemigo final  del primer mundo (aguila), describen
+ un movimiento en caida libre ( asociado a un timer) que al colisonar con el conejo
+ hace que pierda una de sus vidas
+
+ */
+
+
 #include "roca.h"
 #include <QTimer>
 #include <QGraphicsScene>
@@ -6,15 +23,13 @@
 #include "primermundo.h"
 #include "ppconejo.h"
 
-
+//Se carga la imagen y se inicia el timer asociado
 Roca::Roca(float x,QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     //dibuja la bala
 
     posx=x;
     sprite=QPixmap(":/roca.png");
-  //  setScale(0.25);
-
    // connect
     timer2 = new QTimer(this);
     connect(timer2,SIGNAL(timeout()),this,SLOT(move()));
@@ -22,11 +37,14 @@ Roca::Roca(float x,QGraphicsItem *parent) : QGraphicsItem(parent)
    // timer2->start(50);
 
 }
+
+//Se dibuja el margen de la imagen
 QRectF Roca::boundingRect() const
 {
     return QRectF(0,0,35,35);
 }
 
+//Se dibuja el objeto en la escena a partir del sprite
 void Roca::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(0,0, sprite, posSprite, 0,35, 35);
@@ -40,6 +58,7 @@ int Roca::type() const
     return Type;
 }
 
+// Slot que describe el movimiento parabólico de las rocas y verifica la colisión
 void Roca::move()
 {
    // posy=y();

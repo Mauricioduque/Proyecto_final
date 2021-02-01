@@ -16,7 +16,6 @@
 #include "cerdoenemigo.h"
 #include "fondo.h"
 #include "jabalienemigo.h"
-#include "lechuga.h"
 #include "muros.h"
 #include "murosnota.h"
 #include "zanahoria.h"
@@ -151,7 +150,6 @@ private:
 
 
     //complementos de la escena
-    QList <Lechuga *> lechuga;
     QList <Pina *> pina;
     QList <Zanahoria *> zanahoria;
     QList <MurosNota*> ladrillosNota;

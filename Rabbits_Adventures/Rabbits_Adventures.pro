@@ -20,7 +20,6 @@ SOURCES += \
     inicio.cpp \
     instructions.cpp \
     jabalienemigo.cpp \
-    lechuga.cpp \
     login.cpp \
     main.cpp \
     mainwindow.cpp \

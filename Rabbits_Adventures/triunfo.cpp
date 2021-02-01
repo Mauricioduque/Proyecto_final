@@ -1,3 +1,19 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Triunfo: ventana gráfica que se ejecuta luego de obtener la victoria
+ (se colisiona con la zanahoria dorada)posee los botones de volver
+ a inciar el juego o cerrarlo
+
+ */
+
 #include "triunfo.h"
 #include "ui_triunfo.h"
 

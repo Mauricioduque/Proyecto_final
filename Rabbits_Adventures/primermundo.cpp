@@ -1,5 +1,23 @@
+/*
+ Proyecto: Rabbit's Adventures
+
+ Creado por: Laura Isabel Vidal - Mauricio Duque
+
+ Informática II
+ Facultad de Ingeniería
+ Departamento de Electrónica y Telecomunicaciones
+ Universidad de Antioquia
+
+ Clase Primer Mundo: clase central del videojuego, se crean los mundos 1 y 2 , se administra
+ el movimiento del personaje a partir del keypressevent y releasepressevent, se verifica las colisiones
+ con los muros y los alimentos, se genera el reinicio de los respectivos mundos.
+
+ */
+
 #include "primermundo.h"
 #include <iostream>
+
+// se inicializan los timer y se hace un llamado al metodo que inicaliza la escena uno
 PrimerMundo::PrimerMundo(bool configurar, QScrollBar *s,QObject *parent):QGraphicsScene(0,0,8000,720,parent)
   , m_jumpAnimation(new QPropertyAnimation(this))
   , m_platform()
@@ -11,7 +29,7 @@ PrimerMundo::PrimerMundo(bool configurar, QScrollBar *s,QObject *parent):QGraphi
     Vida=5;
     iniciarEscenaUno();
 
-    //inicializamos timer
+    //inicializamos timer asociado al mov del personaje
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(moverPersonaje()));
     timer->setInterval(20);
@@ -35,7 +53,7 @@ PrimerMundo::PrimerMundo(bool configurar, QScrollBar *s,QObject *parent):QGraphi
 
 }
 
-
+//Verifica si se oprime alguna de las teclas asociada al movimiento asigna la dirección y chequea el timer asociado al desplazamiento
 void PrimerMundo::keyPressEvent(QKeyEvent *event){
     if (event->isAutoRepeat())
     return;
@@ -79,6 +97,9 @@ void PrimerMundo::keyPressEvent(QKeyEvent *event){
         }
 
 }
+
+//Verifica si se oprime alguna de las teclas asociada al movimiento y modifca el direccionamiento del conejo con el fin de que
+//el desplazamiento solo ocurra una vez , es decir para el timer, hasta que ocurra un nuevo evento.
 void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->isAutoRepeat())
@@ -109,6 +130,7 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 
 }
 
+//se da el movimento al perosnaje según el evento y a su vez se desplaza la escena
 void PrimerMundo::moverPersonaje()
 {
     checkColisionMuros();
@@ -182,12 +204,14 @@ void PrimerMundo::moverPersonaje()
 
 }
 
+
 void PrimerMundo::jumpStatusChanged(QAbstractAnimation::State newState, QAbstractAnimation::State oldState)
 {
     if(newState == QAbstractAnimation::Stopped && oldState == QAbstractAnimation::Running){
     }
 }
 
+//verifica la caida del personaje
 void PrimerMundo::fallPersonaje()
 {
 
@@ -205,6 +229,7 @@ void PrimerMundo::fallPersonaje()
         }
 }
 
+//verifica el salto del personaje
 void PrimerMundo::jumpPersonaje()
 {
     if (QAbstractAnimation::Stopped == m_jumpAnimation->state()){
@@ -254,6 +279,7 @@ void PrimerMundo::jumpPersonaje()
     }
     personaje->setPos(personaje->pos().x(), y);
 }
+
 
 void PrimerMundo::iniciarEscenaUno()
 {
@@ -647,6 +673,7 @@ void PrimerMundo::setJumpFactor(const qreal &jumpFactor)
         emit jumpFactorChanged(m_jumpFactor);
 }
 
+//verifica el estado del timer asociado al movimiento del personaje
 void PrimerMundo::checkTimer()
 {
 
@@ -661,6 +688,7 @@ void PrimerMundo::checkTimer()
 
 }
 
+//verifica la colision con los muros en la parte superior e inferior
 QGraphicsItem *PrimerMundo::collidingPlatforms()
 {
         QList<QGraphicsItem*> items =  collidingItems(personaje);
@@ -676,6 +704,7 @@ QGraphicsItem *PrimerMundo::collidingPlatforms()
         return 0;
 }
 
+// en esta sección se verifican todas las colisiones
 bool PrimerMundo::manejoColisiones()
 {
     {
@@ -771,6 +800,7 @@ void PrimerMundo::checkColPina()
     }
 }
 
+//se elimina la piña una vez colisionada
 QList<Pina *> PrimerMundo::eliminarPina(QList<Pina *> pina, int pos)
 {
     QList<Pina *> aux;
@@ -783,6 +813,7 @@ QList<Pina *> PrimerMundo::eliminarPina(QList<Pina *> pina, int pos)
 
 }
 
+//se elimina la zanahoria una vez colisionada
 QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, int pos)
 {
     QList<Zanahoria *> aux;
@@ -795,6 +826,8 @@ QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, 
 
 }
 
+//Se ejecuta una acción cuando ocurre las diferentes colisiones con los enemigos o banderas, a partir de las señales
+//emitidas por cada uno de ellos
 void PrimerMundo::Estado(int n)
 {
     int number = n;
@@ -841,6 +874,7 @@ void PrimerMundo::Estado(int n)
     else return;
 }
 
+//se eliminan los objetos del primer mundo y se vuelven a inicializar los timer y direccionamiento del personaje
 void PrimerMundo::reiniciarEscenaUno()
 {
     delete personaje;
@@ -885,6 +919,7 @@ void PrimerMundo::reiniciarEscenaUno()
 
 }
 
+//se eliminan los objetos del segundo mundo y se vuelven a inicializar los timer y direccionamiento del personaje
 void PrimerMundo::reiniciarEscenaDos()
 {
     delete personaje;
@@ -935,6 +970,7 @@ void PrimerMundo::reiniciarEscenaDos()
 
 }
 
+// se eliminan los objetos del primer mundo y se inicializan el valor del scroll y la plataforma
 void PrimerMundo::Borrarmundo1()
 {
     delete personaje;
@@ -972,7 +1008,6 @@ PrimerMundo::~PrimerMundo()
     delete ground;
     delete danger;
     delete background;
-    lechuga.clear();
     zanahoria.clear();
     ladrillosNota.clear();
 
