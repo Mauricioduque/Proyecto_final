@@ -22,14 +22,11 @@ public:
     explicit about(QWidget *parent = 0);
     ~about();
 
+public slots:
+    void on_ok_clicked();
+
 private:
     Ui::about *ui;
-    QVBoxLayout * mainVBox;
-
-    QLabel * schoolInfo, * classInfo,*info, * groupMember1,
-           * groupMember2, * logoLbl, * spacerLabel;
-
-    QPixmap * logo, * spacerBar;
 
 };
 

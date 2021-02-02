@@ -21,9 +21,15 @@ instructions::instructions(QWidget *parent) :
     ui(new Ui::instructions)
 {
     ui->setupUi(this);
+
 }
 
 instructions::~instructions()
 {
     delete ui;
+}
+
+void instructions::on_pushButton_clicked()
+{
+    close();
 }

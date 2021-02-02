@@ -50,6 +50,22 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
     multijugador->setGeometry(QRect(550, 400, 100, 32));
     connect(multijugador, SIGNAL(clicked()), this, SLOT(multijugadorLogin()));
 
+    //Push Button para about
+    aboutButton = new QPushButton(viewer);
+    aboutButton->setText("About");
+    aboutButton->setObjectName(QString("about"));
+    aboutButton->setToolTip("about information");
+    aboutButton->setGeometry(QRect(490, 500, 100, 32));
+    connect(aboutButton, SIGNAL(clicked()), this, SLOT(showAbout()));
+
+
+    instructionsButton = new QPushButton(viewer);
+    instructionsButton->setText("Instructions");
+    instructionsButton->setObjectName(QString("Instructions"));
+    instructionsButton->setToolTip("about information");
+    instructionsButton->setGeometry(QRect(610, 500, 100, 32));
+    connect(instructionsButton, SIGNAL(clicked()), this, SLOT(showinstruction()));
+
     newUserButton = new QPushButton(viewer);
     newUserButton->setText("New User");
     newUserButton->setObjectName(QString("newUserButton"));
@@ -138,6 +154,8 @@ void Inicio::multijugadorLogin()
      labelcontrasena->close();
      password->close();
      userName->close();
+     aboutButton->close();
+     instructionsButton->close();
      scene = new PrimerMundo(false,scroll,this);
      viewer->sceneSet(scene);
 
@@ -155,6 +173,8 @@ void Inicio::unjugadorLogin()
         labelcontrasena->close();
         password->close();
         userName->close();
+        aboutButton->close();
+        instructionsButton->close();
         scene = new PrimerMundo(true,scroll,this);
         viewer->sceneSet(scene);
     }
@@ -169,13 +189,24 @@ void Inicio::unjugadorLogin()
 }
 
 //despleja la ventana de registro de nuevo usuario
-void Inicio::newUser(){
-
+void Inicio::newUser()
+{
     loginWindow = new Login();
     loginWindow->exec();
-
 }
 
 
+void Inicio::showAbout()
+{
+    aboutt = new about;
+    aboutt->setWindowFlags(((aboutt->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+    aboutt->exec();
+}
 
+void Inicio::showinstruction()
+{
+    Instruction = new instructions;
+    Instruction->setWindowFlags(((Instruction->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
+    Instruction->exec();
+}
 
