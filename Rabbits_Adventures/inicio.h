@@ -9,16 +9,12 @@
 #include "primermundo.h"
 #include "view.h"
 #include "login.h"
+#include "about.h"
+#include "instructions.h"
 using namespace std;
-
 
 class View;
 class PrimerMundo;
-
-class AnimatedGraphicsItem : public QObject, public QGraphicsPixmapItem{
-    Q_OBJECT
-    Q_PROPERTY(QPointF pos READ pos WRITE setPos)
-};
 
 class Inicio: public QGraphicsScene{
     Q_OBJECT
@@ -35,6 +31,8 @@ private slots:
      void multijugadorLogin();
      void unjugadorLogin();
      void newUser();
+     void showAbout();
+     void showinstruction();
 
 private:
     int selection = 0;
@@ -42,26 +40,23 @@ private:
     const int height = 720;
     bool usuario=false;
     string database;
-    AnimatedGraphicsItem *background;
     View *viewer;
     QGraphicsPixmapItem *foreground;
-    QGraphicsPixmapItem *cursor;
-    QGraphicsPixmapItem *logo;
-    QGraphicsPixmapItem *border;
-    QGraphicsTextItem *start;
-    QGraphicsTextItem *quit;
     Login *loginWindow;
 
-    QPropertyAnimation *animation;
     QScrollBar *scroll;
     PrimerMundo *scene;
     QPushButton *multijugador;
     QPushButton *Unjugador;
     QPushButton *newUserButton;
+    QPushButton *aboutButton;
+    QPushButton *instructionsButton;
     QLineEdit *labelusuario;
     QLineEdit *labelcontrasena;
     QLabel *userName;
     QLabel *password;
     QGraphicsView *view;
+    about *aboutt;
+    instructions *Instruction;
 };
 #endif // INICIO_H

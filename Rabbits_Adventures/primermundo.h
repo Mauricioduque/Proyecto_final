@@ -103,7 +103,7 @@ private:
     qreal maxX;
     qreal nivelTierra;
     qreal posicionX;
-    int velocidad=7;
+    int coeficiente=7;
     int desplazamientoMundo=0;
     int Vida=0;
 

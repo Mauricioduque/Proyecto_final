@@ -55,8 +55,9 @@ PrimerMundo::PrimerMundo(bool configurar, QScrollBar *s,QObject *parent):QGraphi
 
 //Verifica si se oprime alguna de las teclas asociada al movimiento asigna la dirección y chequea el timer asociado al desplazamiento
 void PrimerMundo::keyPressEvent(QKeyEvent *event){
-    if (event->isAutoRepeat())
-    return;
+    if (event->isAutoRepeat()){
+        return;
+    }
 
     switch (event->key()){
         case Qt::Key_Right:
@@ -102,8 +103,10 @@ void PrimerMundo::keyPressEvent(QKeyEvent *event){
 //el desplazamiento solo ocurra una vez , es decir para el timer, hasta que ocurra un nuevo evento.
 void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 {
-    if (event->isAutoRepeat())
+    if (event->isAutoRepeat()){
         return;
+    }
+
     switch (event->key())
     {
         case Qt::Key_Right:
@@ -137,7 +140,7 @@ void PrimerMundo::moverPersonaje()
     checkColisionFuegos();
     checkColZanahoria();
     checkColPina();
-
+    int dx;
     if(personaje->isFalling()){
         return;
     }
@@ -156,7 +159,9 @@ void PrimerMundo::moverPersonaje()
         }
     }
 
-    const int dx = direction * velocidad;
+
+
+    dx = direction * coeficiente;
     if (direction > 0){
 
         if(personaje->pos().x()==8100){
@@ -166,8 +171,6 @@ void PrimerMundo::moverPersonaje()
         int diff = personaje->pos().x() - scroll->value();
 
         if(diff > 850){
-
-
             scroll->setValue(dx + scroll->value());
             background->setPos(dx + background->pos().x(), background->y());
             Puntaje->setPos(dx + Puntaje->pos().x(), Puntaje->y());
@@ -444,7 +447,6 @@ void PrimerMundo::iniciarEscenaUno()
 void PrimerMundo::iniciarEscenaDos()
 {
 
-
     setSceneRect(0,0,8000,720);
     nivelTierra = 660;
 
@@ -644,8 +646,8 @@ void PrimerMundo::iniciarEscenaDos()
 
       //Agregamos zanahoria de fin de segundo nivel
       zanahoriaDorada = new ZanahDorada();
-      //flag->setPos(7500,390);
-      zanahoriaDorada->setPos(400,550);
+      zanahoriaDorada->setPos(7500,390);
+      //zanahoriaDorada->setPos(400,550);
       addItem(zanahoriaDorada);
       connect(this->zanahoriaDorada, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
 
@@ -704,7 +706,7 @@ QGraphicsItem *PrimerMundo::collidingPlatforms()
         return 0;
 }
 
-// en esta sección se verifican todas las colisiones
+//------------- en esta sección se verifican todas las colisiones------------------------
 bool PrimerMundo::manejoColisiones()
 {
     {
@@ -827,7 +829,7 @@ QList<Zanahoria *> PrimerMundo::eliminarZanahoria(QList<Zanahoria *> zanahoria, 
 }
 
 //Se ejecuta una acción cuando ocurre las diferentes colisiones con los enemigos o banderas, a partir de las señales
-//emitidas por cada uno de ellos
+//emitidas por cada uno de ellos, asociadas a un timer
 void PrimerMundo::Estado(int n)
 {
     int number = n;
@@ -842,6 +844,7 @@ void PrimerMundo::Estado(int n)
     }
     else if(number == 1){
         if (Vida==0){
+            reiniciarEscenaUno();
             gameOverWindow = new GameOver();
             gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
             gameOverWindow->exec();
@@ -850,6 +853,7 @@ void PrimerMundo::Estado(int n)
     }
     else if(number==2){
         if (Vida==0){
+            reiniciarEscenaDos();
             gameOverWindow = new GameOver();
             gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
             gameOverWindow->exec();
@@ -859,6 +863,7 @@ void PrimerMundo::Estado(int n)
     }
     else if(number==3){
         if (Vida==0){
+            reiniciarEscenaDos();
             gameOverWindow = new GameOver();
             gameOverWindow->setWindowFlags(((gameOverWindow->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
             gameOverWindow->exec();
@@ -867,6 +872,7 @@ void PrimerMundo::Estado(int n)
 
     }
     else if(number == 4){
+        reiniciarEscenaDos();
         ganar = new Triunfo();
         ganar->setWindowFlags(((ganar->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
         ganar->exec();

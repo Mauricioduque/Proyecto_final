@@ -16,7 +16,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>GameOver</string>
   </property>
   <widget class="QPushButton" name="iniciar">
    <property name="geometry">
