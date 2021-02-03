@@ -31,5 +31,5 @@ instructions::~instructions()
 
 void instructions::on_pushButton_clicked()
 {
-    close();
+    instructions::reject();
 }

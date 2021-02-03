@@ -136,10 +136,14 @@ void PrimerMundo::keyReleaseEvent(QKeyEvent *event)
 //se da el movimento al perosnaje según el evento y a su vez se desplaza la escena
 void PrimerMundo::moverPersonaje()
 {
-    checkColisionMuros();
-    checkColisionFuegos();
-    checkColZanahoria();
-    checkColPina();
+    if (mundo){
+        checkColisionMuros();
+        checkColZanahoria();
+    }
+    else{
+        checkColPina();
+        checkColisionFuegos();
+    }
     int dx;
     if(personaje->isFalling()){
         return;
@@ -283,10 +287,9 @@ void PrimerMundo::jumpPersonaje()
     personaje->setPos(personaje->pos().x(), y);
 }
 
-
 void PrimerMundo::iniciarEscenaUno()
 {
-
+    mundo=true;
     setSceneRect(0,0,8000,720);
     nivelTierra = 660;
 
@@ -446,7 +449,7 @@ void PrimerMundo::iniciarEscenaUno()
 
 void PrimerMundo::iniciarEscenaDos()
 {
-
+    mundo=false;
     setSceneRect(0,0,8000,720);
     nivelTierra = 660;
 
@@ -1014,6 +1017,7 @@ PrimerMundo::~PrimerMundo()
     delete ground;
     delete danger;
     delete background;
+    delete cerdo1;
     zanahoria.clear();
     ladrillosNota.clear();
 

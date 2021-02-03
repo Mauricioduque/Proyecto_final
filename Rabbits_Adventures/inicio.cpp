@@ -74,7 +74,7 @@ Inicio::Inicio(View *view, QWidget *parent) : QGraphicsScene(parent)
     connect(newUserButton, SIGNAL(clicked()), this, SLOT(newUser()));
 
     labelusuario = new QLineEdit(viewer);
-    //userLine->setObjectName(QString("userLine"));
+    labelusuario->setObjectName(QString("userLine"));
     labelusuario->setToolTip("Enter you username");
     labelusuario->setGeometry(QRect(540, 320, 200, 25));
 
@@ -188,25 +188,28 @@ void Inicio::unjugadorLogin()
 
 }
 
-//despleja la ventana de registro de nuevo usuario
+//despliega la ventana de registro de nuevo usuario
 void Inicio::newUser()
 {
     loginWindow = new Login();
-    loginWindow->exec();
+    loginWindow->open();
 }
 
-
+//despliega la ventana de la información de los creadores
 void Inicio::showAbout()
 {
     aboutt = new about;
     aboutt->setWindowFlags(((aboutt->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
-    aboutt->exec();
+    aboutt->open();
+    return;
 }
 
+//despliega la ventana de instrucciones
 void Inicio::showinstruction()
 {
     Instruction = new instructions;
     Instruction->setWindowFlags(((Instruction->windowFlags()|Qt::CustomizeWindowHint)& ~Qt::WindowCloseButtonHint));
-    Instruction->exec();
+    Instruction->open();
+    return;
 }
 

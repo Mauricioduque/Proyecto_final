@@ -25,6 +25,8 @@ public:
 private slots:
     void on_Registrar_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::Login *ui;
     QString nombre,contrasena;

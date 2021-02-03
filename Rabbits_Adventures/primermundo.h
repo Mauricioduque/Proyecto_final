@@ -83,6 +83,7 @@ private:
     bool quieto=false;
     bool Jugador=true;
     bool configurar_=true;
+    bool mundo;
 
     PPConejo *personaje;
 
