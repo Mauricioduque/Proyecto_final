@@ -16,5 +16,5 @@ about::~about()
 
 void about::on_ok_clicked()
 {
-    close();
+    about::reject();
 }

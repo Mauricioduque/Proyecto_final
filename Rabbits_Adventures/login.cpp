@@ -52,5 +52,10 @@ void Login::on_Registrar_clicked()
     dato.append(stringContrasena);
     dato.push_back('\n');
     escribir_txt("registro1.txt",dato);
-    close();
+    Login::reject();
+}
+
+void Login::on_pushButton_2_clicked()
+{
+    Login::reject();
 }

@@ -47,5 +47,8 @@ public:
     View *view;
 
 
+protected:
+    void closeEvent(QCloseEvent *event);
+
 };
 #endif // MAINWINDOW_H

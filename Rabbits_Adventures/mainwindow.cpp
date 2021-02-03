@@ -26,6 +26,10 @@ MainWindow::MainWindow()
     setWindowTitle("Rabbits Adventures");
 }
 
+void MainWindow::closeEvent(QCloseEvent *){
+
+    qApp->quit();
+}
 
 void MainWindow::createScene(){
 
