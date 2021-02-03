@@ -440,7 +440,7 @@ void PrimerMundo::iniciarEscenaUno()
 
         //Agrego bandera fin de primer nivel
         flag=new Flag();
-        flag->setPos(7500,390);
+        flag->setPos(7500,400);
         //flag->setPos(400,550);
         addItem(flag);
         connect(this->flag, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
@@ -508,7 +508,7 @@ void PrimerMundo::iniciarEscenaDos()
                              , {3500,615,2}, {3500,575,2}, {3500,535,2},{3500,495,2},{3500,575,2}, {3500,535,2}
                              , {4350,615,2}, {4350,575,2}, {4350,535,2},{4350,495,2},{4350,455,2}, {4350,415,2}
                              , {4350,375,2}, {5600,615,2}, {5680,570,2},{5760,525,2},{5840,480,2}, {5920,435,2}
-                             , {7500,450,1}, {7600,615,2}, {7600,575,2},{7600,535,2},{7600,495,2}, {7600,455,2}
+                             , {7500,420,1}, {7600,615,2}, {7600,575,2},{7600,535,2},{7600,495,2}, {7600,455,2}
                              , {7600,415,2}, {7600,375,2}, {7600,335,2},{7600,295,2},{7600,255,2}, {7600,215,2}
                              , {7600,175,2}, {7600,135,2}, {7600,95,2},{7600,55,2}};
     for (int i = ladrillosNota.size() - 1; 0 <= i; i--)
@@ -649,7 +649,7 @@ void PrimerMundo::iniciarEscenaDos()
 
       //Agregamos zanahoria de fin de segundo nivel
       zanahoriaDorada = new ZanahDorada();
-      zanahoriaDorada->setPos(7500,390);
+      zanahoriaDorada->setPos(7480,390);
       //zanahoriaDorada->setPos(400,550);
       addItem(zanahoriaDorada);
       connect(this->zanahoriaDorada, SIGNAL(estadoJuego(int)),this, SLOT(Estado(int)));
@@ -777,6 +777,7 @@ void PrimerMundo::checkColisionFuegos()
         }
         else reiniciarEscenaDos();
     }
+    else return;
 
 
 }
